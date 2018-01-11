@@ -1,0 +1,30 @@
+/* Set gray background color and 100% height */
+	.sidenav {
+	  padding-top: 0px;
+	  background-color: #f1f1f1;
+	  height: 150%;/* Bug @ 100% height */
+	}
+	#METRICS-HEADER {
+		font-weight: bold;
+		text-decoration: underline overline;
+	}
+	label:hover {/* Minor fix */
+		cursor: default;
+	}
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: auto;
+		cellspacing: 0;
+		cellpadding: 0;
+	}
+
+	td, th {
+		border: none;
+		text-align: center;
+		width: auto;
+	}
+
+	tr:nth-child(even) {
+		background-color: #dddddd;
+	}
