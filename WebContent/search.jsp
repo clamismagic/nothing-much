@@ -2,12 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="theFourHorsemen.dbConnection" %>
-<%
-	// Create db connection
-	dbConnection db = new dbConnection(request);
-	Connection conn = db.getConnection();
-%>
+<%@ page import="model.QueryDataManager" %>
+<%@ page import="model.QueryData" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -86,7 +82,7 @@ $(document).ready(function(){
 				<%
 					}
 				%>
-				<form method="post" action="search.jsp">
+				<form method="post" action="searchServlet">
 					<p>
 						SELECT
 						<select name="column" id="column">
@@ -95,23 +91,16 @@ $(document).ready(function(){
 						FROM <select name="table" id="table">
 							<option>---Select Table---</option>
 							<%
-								String table = request.getParameter("table");
-								DatabaseMetaData tableStmt = conn.getMetaData();
-								ResultSet tableRs = tableStmt.getTables(null, null, "%", null);
-								
-								while (tableRs.next()) {
-									String tableName = tableRs.getString(3);
+								QueryDataManager queryDataManager = new QueryDataManager(request);
+								ArrayList<String> tableName = queryDataManager.getTables();
+								for (int i = 0; i < tableName.size(); i++) {
 							%>
-							<option><%=tableName %></option>
+							<option><%=tableName.get(i) %></option>
 							<%
 								}
 							%>
 						</select>
-						WHERE <input type="text" name="condition" placeholder="Condition"
-						<%
-							String condition = request.getParameter("condition");
-						%>
-						>
+						WHERE <input type="text" name="condition" placeholder="Condition">
 						<input type="submit" value="Query" />
 					</p>
 				</form>
@@ -120,130 +109,85 @@ $(document).ready(function(){
 			<div class="col-md-12">
 				<h1>Search result</h1>
 				<%
+					String table = request.getParameter("table");
 					String column = request.getParameter("column");
-					if (column == null || table == null) {
-						out.println("Please enter your search query.");
-					}
-					else if (column != "" && table != "" && condition == null || condition == "") {
+					String condition = request.getParameter("condition");
+					if (filterStatus != null && filterStatus.equals("success1")) {
 				%>
 				<p>Query: <strong>SELECT</strong> <%=column %> <strong>FROM</strong> <%=table %></p>
 				<table class="searchQuery">
 				<%
-					try {
-					DatabaseMetaData metaData = conn.getMetaData();
-					ResultSet metaDataRs = metaData.getColumns(null, null, table, null);
-					ArrayList<String> columnName = new ArrayList<String>();
-					ArrayList<String> col = new ArrayList<String>();
-
-					while (metaDataRs.next()) {
-						columnName.add(metaDataRs.getString("COLUMN_NAME"));
-					}
-					String selectDataSQL = "SELECT " + column +" FROM " + table;
-					PreparedStatement selectDataPstmt = conn.prepareStatement(selectDataSQL);
-					ResultSet selectDataRs = selectDataPstmt.executeQuery();
-					while (selectDataRs.next()) {
-						for (int i = 0; i < columnName.size(); i++) {
-							col.add(selectDataRs.getObject(columnName.get(i)).toString());
-						}
-					}
+					QueryData queryData = (QueryData) request.getAttribute("queryData");
 				%>
 					<tr>
 					<%
-						for (int i = 0; i < columnName.size(); i++) {
+						for (int i = 0; i < queryData.getColumnName().size(); i++) {
 					%>
-						<td><%=columnName.get(i) %>
+						<td><%=queryData.getColumnName().get(i) %>
 					<%
 						}
 					%>
 					</tr>
 					<%
 						int x = 0;
-						for (int i = 0; i < col.size(); i++) {
-							if (i % columnName.size() == 0) {
+						for (int i = 0; i < queryData.getColumnData().size(); i++) {
+							if (i % queryData.getColumnName().size() == 0) {
 							%>
 							<tr>
 							<%
 							}
 					%>
-						<td><%=col.get(i) %></td>
+						<td><%=queryData.getColumnData().get(i) %></td>
 					<%
 							x++;
-							if (x == columnName.size()) {
+							if (x == queryData.getColumnName().size()) {
 							%>
 							</tr>
 							<%
 								x = 0;
 							}
 						}
-					} catch (Exception e) {
-					%>
-					<p class="errorMessage">No data found or the query entered is wrong.</p>
-					<%
-					}
 					%>
 
 				</table>
 				<%
-				} else {
+ 				} else if (filterStatus != null && filterStatus.equals("success2")) {
 				%>
-				<p>Query: SELECT <%=column %> FROM <%=table %> WHERE <%=condition %></p>
-				<table>
-				<%
-					try {
-					DatabaseMetaData metaData = conn.getMetaData();
-					ResultSet metaDataRs = metaData.getColumns(null, null, table, null);
-					ArrayList<String> columnName = new ArrayList<String>();
-					ArrayList<String> col = new ArrayList<String>();
-
-					while (metaDataRs.next()) {
-						columnName.add(metaDataRs.getString("COLUMN_NAME"));
-					}
-					String selectDataSQL = "SELECT " + column + " FROM " + table + " WHERE " + condition;
-					PreparedStatement selectDataPstmt = conn.prepareStatement(selectDataSQL);
-					ResultSet selectDataRs = selectDataPstmt.executeQuery();
-					while (selectDataRs.next()) {
-						for (int i = 0; i < columnName.size(); i++) {
-							col.add(selectDataRs.getObject(columnName.get(i)).toString());
-						}
-					}
-				%>
-					<tr>
-					<%
-						for (int i = 0; i < columnName.size(); i++) {
-					%>
-						<td><%=columnName.get(i) %>
-					<%
-						}
-					%>
-					</tr>
-					<%
+ 				<p>Query: <strong>SELECT</strong> <%=column %> <strong>FROM</strong> <%=table %> <strong>WHERE</strong> <%=condition %></p>
+ 				<table>
+ 				<%
+ 					QueryData queryData = (QueryData) request.getAttribute("queryData");
+ 				%>
+ 					<tr>
+ 					<%
+ 						for (int i = 0; i < queryData.getColumnName().size(); i++) {
+ 					%>
+ 						<td><%=queryData.getColumnName().get(i) %>
+ 					<%
+ 						}
+ 					%>
+ 					</tr>
+ 					<%
 						int x = 0;
-						for (int i = 0; i < col.size(); i++) {
-							if (i % columnName.size() == 0) {
+						for (int i = 0; i < queryData.getColumnData().size(); i++) {
+							if (i % queryData.getColumnName().size() == 0) {
 							%>
 							<tr>
 							<%
 							}
 					%>
-						<td><%=col.get(i) %></td>
+						<td><%=queryData.getColumnData().get(i) %></td>
 					<%
 							x++;
-							if (x == columnName.size()) {
+							if (x == queryData.getColumnName().size()) {
 							%>
 							</tr>
 							<%
 								x = 0;
 							}
 						}
-					} catch (Exception e) {
+ 				}
 					%>
-					<p class="errorMessage">Please try again.</p>
-					<%
-					}
-					%>
-				<%
-				}
-				%>
 				</table>
 			</div>
 		</div>
@@ -263,10 +207,6 @@ $(document).ready(function(){
 			$("#wrapper").toggleClass("toggled");
 		});
 	</script>
-	
-	<%
-		conn.close();
-	%>
 
 </body>
 </html>

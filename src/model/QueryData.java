@@ -1,48 +1,35 @@
 package model;
 
+import java.util.ArrayList;
+
 public class QueryData {
 
-	private String columnName;
-	private int id;
-	private String hostName;
-	private String timeStamp;
-	private double riskFactor;
-	private String riskName;
+	private ArrayList<String> columnName;
+	private ArrayList<String> columnData;
 	
 	public QueryData() {
 		super();
 	}
 	
-	public QueryData(int id, String hostName, String timeStamp, double riskFactor, String riskName) {
-		this.id = id;
-		this.hostName = hostName;
-		this.timeStamp = timeStamp;
-		this.riskFactor = riskFactor;
-		this.riskName = riskName;
+	public QueryData(ArrayList<String> columnName, ArrayList<String> columnData) {
+		this.columnName = columnName;
+		this.columnData = columnData;
 	}
 
-	public String getColumnName() {
+	public ArrayList<String> getColumnName() {
 		return columnName;
 	}
 
-	public int getId() {
-		return id;
+	public void setColumnName(ArrayList<String> columnName) {
+		this.columnName = columnName;
 	}
 
-	public String getHostName() {
-		return hostName;
+	public ArrayList<String> getColumnData() {
+		return columnData;
 	}
 
-	public String getTimeStamp() {
-		return timeStamp;
-	}
-
-	public double getRiskFactor() {
-		return riskFactor;
-	}
-
-	public String getRiskName() {
-		return riskName;
+	public void setColumnData(ArrayList<String> columnData) {
+		this.columnData = columnData;
 	}
 
 }
