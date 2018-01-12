@@ -78,29 +78,52 @@ $(document).ready(function(){
 				<%
 					}else if (filterStatus != null && filterStatus.equals("error2")) {
 				%>
-				<p class="errorMessage">Please ensure all fills are filled up.</p>
+				<p class="errorMessage">Please ensure all compulsory fields are filled up.</p>
 				<%
 					}
 				%>
 				<form method="post" action="searchServlet">
+					<table id="searchForm">
+						<tr>
+							<td>
+								SELECT TABLE*:
+							</td>
+							<td>
+								<select name="table" id="table">
+									<option>---Select Table---</option>
+									<%
+										QueryDataManager queryDataManager = new QueryDataManager(request);
+										ArrayList<String> tableName = queryDataManager.getTables();
+										for (int i = 0; i < tableName.size(); i++) {
+									%>
+									<option><%=tableName.get(i) %></option>
+									<%
+										}
+									%>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								SELECT COLUMN*:
+							</td>
+							<td>
+								<select name="column" id="column">
+									<option>---Select Table First---</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								CONDITION:
+							</td>
+							<td>
+								<input type="text" name="condition" id="condition" placeholder="Condition" />
+							</td>
+						</tr>
+					</table>
+						<p id="importantNote">*Compulsory fields.</p>
 					<p>
-						SELECT
-						<select name="column" id="column">
-							<option>---Select Table First---</option>
-						</select>
-						FROM <select name="table" id="table">
-							<option>---Select Table---</option>
-							<%
-								QueryDataManager queryDataManager = new QueryDataManager(request);
-								ArrayList<String> tableName = queryDataManager.getTables();
-								for (int i = 0; i < tableName.size(); i++) {
-							%>
-							<option><%=tableName.get(i) %></option>
-							<%
-								}
-							%>
-						</select>
-						WHERE <input type="text" name="condition" placeholder="Condition">
 						<input type="submit" value="Query" />
 					</p>
 				</form>
@@ -119,11 +142,11 @@ $(document).ready(function(){
 				<%
 					QueryData queryData = (QueryData) request.getAttribute("queryData");
 				%>
-					<tr>
+					<tr id="searchResultHeader">
 					<%
 						for (int i = 0; i < queryData.getColumnName().size(); i++) {
 					%>
-						<td><%=queryData.getColumnName().get(i) %>
+						<td><%=queryData.getColumnName().get(i).toUpperCase() %>
 					<%
 						}
 					%>
@@ -158,11 +181,11 @@ $(document).ready(function(){
  				<%
  					QueryData queryData = (QueryData) request.getAttribute("queryData");
  				%>
- 					<tr>
+ 					<tr id="searchResultHeader">
  					<%
  						for (int i = 0; i < queryData.getColumnName().size(); i++) {
  					%>
- 						<td><%=queryData.getColumnName().get(i) %>
+ 						<td><%=queryData.getColumnName().get(i).toUpperCase() %>
  					<%
  						}
  					%>

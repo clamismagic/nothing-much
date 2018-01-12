@@ -104,6 +104,13 @@ body {
 	float: left;
 }
 
+#importantNote {
+	color: red;
+	font-size: 13px;
+	font-style: italic;
+	font-weight: bold;
+}
+
 .metric-border {
 	border-right: 1px solid rgba(0,0,0,0.1);
 }
@@ -129,8 +136,30 @@ body {
 	border: solid 1px black;
 }
 
-.searchQuery tr, td {
+.searchQuery tr, .searchQuery td {
 	border: solid 1px black;
+	padding: 5px;
+}
+
+#searchResultHeader {
+	background-color: #ccc;
+	font-weight: bold;
+	
+}
+
+#table {
+	width: 200px;
+}
+
+#column {
+	width: 200px;
+}
+
+#condition {
+	width: 500px;
+}
+
+#searchForm tr, #searchForm td {
 	padding: 5px;
 }
 
