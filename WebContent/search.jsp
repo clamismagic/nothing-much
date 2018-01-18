@@ -53,8 +53,7 @@ $(document).ready(function(){
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
-				<li class="sidebar-brand"><a href="index.jsp"> The Four
-						Horsemen </a></li>
+				<li class="sidebar-brand"><a href="index.jsp"><img class="logoSidebar" alt="The Four Horsemen" src="images/logo_Sidebar.png" /></a></li>
 				<li><a href="index.jsp">To the field</a></li>
 				<li><a href="search.jsp">To find</a></li>
 			</ul>
@@ -64,8 +63,8 @@ $(document).ready(function(){
 		<!-- Page Content -->
 		<div id="page-content-wrapper">
 			<div>
-				<a href="#menu-toggle" class="btn btn-secondary menuAlign" id="menu-toggle">Menu</a>
-				<img class="logo" alt="The Four Horsemen" src="images/logo.jpg" />
+				<a href="#menu-toggle" class="menuBtn menuAlign" id="menu-toggle">Menu</a>
+				<img class="logo" alt="The Four Horsemen" src="images/logo_hive.png" />
 				<hr />
 			</div>
 			<div class="col-md-12">
@@ -89,18 +88,20 @@ $(document).ready(function(){
 								SELECT TABLE*:
 							</td>
 							<td>
-								<select name="table" id="table">
-									<option>---Select Table---</option>
-									<%
-										QueryDataManager queryDataManager = new QueryDataManager(request);
-										ArrayList<String> tableName = queryDataManager.getTables();
-										for (int i = 0; i < tableName.size(); i++) {
-									%>
-									<option><%=tableName.get(i) %></option>
-									<%
-										}
-									%>
-								</select>
+								<div class="searchDropdown">
+									<select name="table" id="table">
+										<option>---Select Table---</option>
+										<%
+											QueryDataManager queryDataManager = new QueryDataManager(request);
+											ArrayList<String> tableName = queryDataManager.getTables();
+											for (int i = 0; i < tableName.size(); i++) {
+										%>
+										<option><%=tableName.get(i) %></option>
+										<%
+											}
+										%>
+									</select>
+								</div>
 							</td>
 						</tr>
 						<tr>
@@ -108,9 +109,11 @@ $(document).ready(function(){
 								SELECT COLUMN*:
 							</td>
 							<td>
-								<select name="column" id="column">
-									<option>---Select Table First---</option>
-								</select>
+								<div class="searchDropdown">
+									<select name="column" id="column">
+										<option>---Select Table First---</option>
+									</select>
+								</div>
 							</td>
 						</tr>
 						<tr>
@@ -124,7 +127,7 @@ $(document).ready(function(){
 					</table>
 						<p id="importantNote">*Compulsory fields.</p>
 					<p>
-						<input type="submit" value="Query" />
+						<input id="submitQuery" type="submit" value="Query" />
 					</p>
 				</form>
 				<hr />
