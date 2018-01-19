@@ -26,17 +26,15 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
+	$(document).ready(function() {
 
-		/*$("#table").change(function(data)*/ function change(data) {
-			//var table = $("select#table").val();
-			var idx = data.selectedIndex;
-			var table = data.options[idx].value;
-			var id = data.id;
+		$("#table").change(function(data) {
+			var table = $("select#table").val();
 			$.get('searchServlet', {
 				tableName : table
 			}, function(response) {
 
-				var select = $('#column' + id);
+				var select = $('#column');
 				select.find('option').remove();
 				if (table != "---Select Table---") {
 					$('<option>').val("*").text("*").appendTo(select);
@@ -45,8 +43,8 @@
 					$('<option>').val(value).text(value).appendTo(select);
 				});
 			});
-		}
-		$(document).ready(function() {
+		});
+		
 		//here first get the contents of the div with name class copy-fields and add it to after "after-add-more" div class.
 	      $(".add-more").click(function(){ 
 	          var html = $(".copy-fields").html();
@@ -105,17 +103,14 @@
 							<td>SELECT TABLE*:</td>
 							<td>
 								<div class="searchDropdown">
-									<%
-										int statementCount = 0;
-									%>
-									<select name="table" class="table" id="<%=statementCount %>" onchange="change(this);">
+									<select name="table" id="table">
 										<option>---Select Table---</option>
 										<%
 											QueryDataManager queryDataManager = new QueryDataManager(request);
 											ArrayList<String> tableName = queryDataManager.getTables();
 											for (int i = 0; i < tableName.size(); i++) {
 										%>
-										<option value="<%=tableName.get(i) %>"><%=tableName.get(i)%></option>
+										<option><%=tableName.get(i)%></option>
 										<%
 											}
 										%>
@@ -127,13 +122,9 @@
 							<td>SELECT COLUMN*:</td>
 							<td>
 								<div class="searchDropdown">
-									<select name="column" id="column<%=statementCount %>">
+									<select name="column" id="column">
 										<option>---Select Table First---</option>
 									</select>
-									<%
-										request.setAttribute("statementCount", statementCount);
-										statementCount++;
-									%>
 								</div>
 							</td>
 						</tr>
@@ -155,12 +146,12 @@
 						<td>SELECT TABLE*:</td>
 						<td>
 							<div class="searchDropdown">
-								<select name="table" class="table" id="<%=statementCount %>" onchange="change(this);">
+								<select name="table" id="table">
 									<option>---Select Table---</option>
 									<%
 										for (int i = 0; i < tableName.size(); i++) {
 									%>
-									<option value="<%=tableName.get(i) %>"><%=tableName.get(i)%></option>
+									<option><%=tableName.get(i)%></option>
 									<%
 										}
 									%>
@@ -172,12 +163,9 @@
 						<td>SELECT COLUMN*:</td>
 						<td>
 							<div class="searchDropdown">
-								<select name="column" id="column<%=statementCount %>">
+								<select name="column" id="column">
 									<option>---Select Table First---</option>
 								</select>
-								<%
-									statementCount++;
-								%>
 							</div>
 						</td>
 					</tr>
@@ -193,7 +181,6 @@
 			<div class="col-md-12">
 				<h1>Search result</h1>
 				<%
-					int resultCount = (Integer)request.getAttribute("statementCount");
 					String table = request.getParameter("table");
 					String column = request.getParameter("column");
 					String condition = request.getParameter("condition");
