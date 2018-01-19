@@ -17,6 +17,6 @@
   <context-param>
     <description>JDBC URL</description>
     <param-name>jdbcURL</param-name>
-    <param-value>jdbc:mysql://localhost/test</param-value>
+    <param-value>jdbc:mysql://localhost/fyp</param-value>
   </context-param>
 </web-app>
