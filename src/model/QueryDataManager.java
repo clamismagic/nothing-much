@@ -92,7 +92,6 @@ public class QueryDataManager {
 			} else {
 				metaDataRs = metaData.getColumns(null, null, table, column);
 			}
-
 			while (metaDataRs.next()) {
 				columnName.add(metaDataRs.getString("COLUMN_NAME"));
 			}
