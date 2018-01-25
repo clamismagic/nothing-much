@@ -2,7 +2,10 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.text.*"%>
+<%@ page import="java.util.Date"%>
 <%@ page import="model.*"%>
+<%@ page import="model.Meadow" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -25,7 +28,6 @@
 <link rel="stylesheet" href="css/meadow/base.css" />
 <link rel="stylesheet" href="css/meadow/meadow.css" />
 <link rel="stylesheet" href="css/meadow/meadowTest.css" />
-
 <!-- Script -->
 <script>
 	$(document).ready(function(){
@@ -72,112 +74,89 @@
 				<p class="errorMessage">Please select at least 1 metric to show.</p>
 				<%
 					}
+					HostGenSQL hostgensql = new HostGenSQL(request);
+					ArrayList<String> risk = hostgensql.distinctRiskname();
 				%>
 				<!-- Meadow Diagram Filter form -->
 				<form method="post" action="filterServlet" onSubmit="return">
 					<p>
+					<%
+					for(String singlerisk : risk) {
+					%>
+					<input class="filterCheckbox" type="checkbox" name="metrics"
+							value="<%=singlerisk %>"><%=singlerisk%></input><br>
+							<%
+							}
+							%>
+							
+					<!-- 
 						<input class="filterCheckbox" type="checkbox" name="metrics"
-							value="Spike" />Spike<br> <input class="filterCheckbox"
-							type="checkbox" name="metrics" value="Periodicity" />Periodicity<br>
-						<input class="filterCheckbox" type="checkbox" name="metrics" value="Domain names" />Domain names<br>
-						<input class="filterCheckbox" type="checkbox" name="metrics" value="Port access" />Port access<br>
-						<input class="filterCheckbox" type="checkbox" name="metrics" value="Parent-Child" />Parent-Child<br>
-						<input class="filterCheckbox" type="checkbox" name="metrics" value="Metric1" />Metric1<br>
-						<input class="filterCheckbox" type="checkbox" name="metrics" value="Metric2" />Metric2<br>
-						<input class="filterCheckbox" type="checkbox" name="metrics" value="Metric3" />Metric3
+							value="Spike">Spike</input><br> <input
+							class="filterCheckbox" type="checkbox" name="metrics"
+							value="Periodicity">Periodicity</input><br> <input
+							class="filterCheckbox" type="checkbox" name="metrics"
+							value="Domain names">Domain names</input><br> <input
+							class="filterCheckbox" type="checkbox" name="metrics"
+							value="Port access">Port access</input><br> <input
+							class="filterCheckbox" type="checkbox" name="metrics"
+							value="Parent-Child">Parent-Child</input><br> <input
+							class="filterCheckbox" type="checkbox" name="metrics"
+							value="Metric1">Metric1</input><br> <input
+							class="filterCheckbox" type="checkbox" name="metrics"
+							value="Metric2">Metric2</input><br> <input
+							class="filterCheckbox" type="checkbox" name="metrics"
+							value="Metric3">Metric3</input>
+							-->
+							<%
+							Meadow meadow = new Meadow();
+							if (filterStatus != null && filterStatus.equals("working")) {
+								meadow = (Meadow) request.getAttribute("meadow");
+							}
+							DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+							java.util.Date currentTime = new java.util.Date(); // use currentTime if risk factors are updated to current datetime
+							java.util.Date fiveMinBefore = new java.util.Date(System.currentTimeMillis() - 3600 * 1000);
+							%>
+							<input type="hidden" name="currentTime" value="<%=df.format(currentTime) %>" />
+							<input type="hidden" name="fiveMinBefore" value="<%=df.format(fiveMinBefore) %>" />
 					</p>
 					<input type="submit" value="Filter" />
 				</form>
 			</div>
 			<%
-			//list of hostnames
-			HostGenSQL hostGenSQL = new HostGenSQL();
-			List<QueryData> hostname = (List<QueryData>)hostGenSQL.hostname().executeQuery();
-			HashMap<String, HashMap<String, String>> allhostrisks = new HashMap<String, HashMap<String, String>>();	//link hostname to map of risk factors
-			int degrees = 0;
-			HashMap<String, int[]> posofhostoncanvas = new HashMap<String, int[]>();
-			for(QueryData singlehostentry : hostname) {
-				HashMap<String,String> riskfactorpos = new HashMap<String,String>();	//link riskname to risk value
-				Double AvgRisk;
-				//TODO execute query based on checkbox options (probably done below?)
-				for (int i=0;i<checkboxes.length;i++) {
-					/* Query MySQL -> select __ from __
-			        where hostname = "onehost" and
-			        riskname = "onecheck" */
-					PreparedStatement pstmt = hostGenSQL.riskcheckbyhostandrisk();
-					pstmt.setString(1, singlehostentry.toString());
-					pstmt.setString(2, checkboxes[i]);
-					ResultSet rs = pstmt.executeQuery();
-					double risk = (double) rs.getObject(1);
-					AvgRisk += risk;
-					int x = 10 ,y = 10;
-					StringBuilder values = new StringBuilder();
-					switch(i) {
-					case 0: 	// calculate coords toward top (12 o clock direction)
-						y -= (risk*10);
-						values.append(x + " , " + y); 
-						break;
-					case 1:		// calculate coords toward top right (2 o clock direction)
-						x += (risk*10);
-						values.append(x + " , " + y);
-						break;	
-					case 2:		// calculate coords toward bottom right (5 o clock direction)
-						x += (int) (risk*10*(Math.cos(Math.toRadians(53))));
-						y += (int) (risk*10*(Math.sin(Math.toRadians(53))));
-						values.append(x + " , " + y);
-						break;
-					case 3:		 // calculate coords toward bottom left (7 o clock direction)
-						x -= (int) (risk*10*(Math.cos(Math.toRadians(53))));
-						y += (int) (risk*10*(Math.sin(Math.toRadians(53))));
-						values.append(x + " , " + y);
-						break;
-					case 4:		// calculate coords toward top left (10 o clock direction)
-						x -= (risk*10);
-						values.append(x + " , " + y);
-						break;
-					}
-					riskfactorpos.put(singlehostentry.getHostName(), values.toString());
-				}
-				AvgRisk /= checkboxes.length();
-				int distance = (int) Math.sqrt((((1-AvgRisk)/2)*800*600/Math.PI));
-				int[] currenthostcords = null;
-				while (currenthostcords == null) {
-					currenthostcords = HostGeneration.generatexypos(degrees, distance, posofhostoncanvas);
-					degrees += 3;
-				}
-				posofhostoncanvas.put(singlehostentry.getHostName(),currenthostcords);
-					allhostrisks.put(singlehostentry.getHostName(),riskfactorpos);
-			}
-			
-			
-			
-			
-			
+				//list of hostnames 
+				//calvin is useful hs is useless piece of shit!!
+				
+
+				/* for (Map.Entry<String, HashMap<String,String>> test : allhostrisks.entrySet()) {
+				String key = test.getKey();
+				StringBuilder allvalues = new StringBuilder();
+				   HashMap<String,String> value = test.getValue();
+				   for (Map.Entry<String, String> testing : value.entrySet()) {
+				   	String keys = testing.getKey();
+				   	String values = testing.getValue();
+				   	allvalues.append(values +" ");
+				       System.out.println("Hostname : " + key + " checkbox: " + keys + " inside value: " + values);
+				   }
+				   System.out.println(allvalues);
+				}  */
+				Date date = new Date();
 			%>
-			
-			<div class="col-md-9 align">
-				<table>
-					<tr>
-						<!-- 1 -->
-						<!--<td colspan="1">
-				<svg width="105" height="105">
-					<polygon points="50,5 20,99 95,39 5,39 80,99" style="fill:lime;stroke:purple;stroke-width:1;fill-rule:nonzero;" />
-				</svg>
-			</td>-->
-						<!-- Top -> Mid -> Right -> Left -> Mid -> Bottom-Left -> Mid -> Bottom-Right -> Mid -->
-						<td colspan="1">
-							<!--<svg height="210">
-					<polygon points="100,10 100,99 190,99 10,99 100,99 50,198 100,99 150,198 100,99"
-					style="fill-opacity:0;stroke:black;stroke-width:10;fill-rule:nonzero;" />
-				</svg>
-				<svg width="105" height="105">
-					<polygon points="50,5 50,49 95,49 5,49 50,49 25,99 50,49 75,99 50,49" style="fill-opacity:0;stroke:black;stroke-width:10;fill-rule:nonzero;" />
-				</svg>--> <!--<svg width="21" height="21">
-					<polygon points="10,1 10,10 19,10 1,10 10,10 5,20 10,10 15,20 10,10" style="fill-opacity:0;stroke:black;stroke-width:1;fill-rule:nonzero;" />
-				</svg>--> <!-- /host?10.0.1.1 --> 
-									</tr>
-				</table>
+
+			<div class="col-md-9 align" id="main">
+
+				<%
+					
+				%>
 			</div>
+			<div class="slidecontainer" bottom:5px>
+				<input type="range" min="<%=date.getTime() - 1514829136%>"
+					max="<%=date.getTime()%>" value="<%=date.getTime()%>"
+					class="slider" id="myRange">
+				<p>
+					Value: <span id="demo"></span>
+				</p>
+			</div>
+
 		</div>
 		<!-- /#page-content-wrapper -->
 	</div>
@@ -185,7 +164,25 @@
 	<!-- Bootstrap core JavaScript -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		var map = "<%=meadow.getAllHostRisks()%>"; 
+		var hostname = "<%=meadow.getAllHosts()%>";
+		var hostpos = "<%=meadow.getToPassXYcoords()%>";
+	</script>
+	<script type="text/javascript" src="js/test-edit.js"></script>
+	<!--  Slider script -->
+	<script>
+		var slider = document.getElementById("myRange");
+		var output = document.getElementById("demo");
+		output.innerHTML = "Now";
 
+		slider.oninput = function() {
+			var utcSeconds = Math.floor(this.value / 1000);
+			console.log(utcSeconds);
+			var date = new Date(utcSeconds * 1000);
+			output.innerHTML = date;
+		}
+	</script>
 	<!-- Menu Toggle Script -->
 	<script>
 		$("#menu-toggle").click(function(e) {

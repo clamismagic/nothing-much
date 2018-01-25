@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Meadow;
+import model.MeadowManager;
+
 /**
  * Servlet implementation class filterServlet
  */
@@ -36,11 +39,15 @@ public class filterServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ServletOutputStream out = response.getOutputStream();
-		response.setContentType("text/html");
-		// Set selectedMetrics to contain the values sent from form
+		// Get currentTime and fiveMinBefore
+		String currentTime = request.getParameter("currentTime");
+		String fiveMinBefore = request.getParameter("fiveMinBefore");
+		// Get selectedMetrics
 		String[] selectedMetrics = request.getParameterValues("metrics");
+		// Declare manager
+		Meadow meadow = new Meadow();
+		MeadowManager meadowManager = new MeadowManager();
+		meadow = meadowManager.genHost(request, fiveMinBefore, currentTime, selectedMetrics);
 		// Validation for selectedMetrics
 		if (selectedMetrics == null) {
 			response.sendRedirect("index.jsp?status=error2");
@@ -48,11 +55,10 @@ public class filterServlet extends HttpServlet {
 		} else if (selectedMetrics.length > 5) {
 			response.sendRedirect("index.jsp?status=error");
 			return;
+		} else {
+			request.setAttribute("meadow", meadow);
+			request.getRequestDispatcher("index.jsp?status=working").forward(request, response);
 		}
-		for (int i = 0; i < selectedMetrics.length; i++) {
-			out.println(selectedMetrics[i]);
-		}
-		
-	}
+	}	
 
 }
