@@ -4,6 +4,10 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
  */
 
+.svg-icon path {
+	fill: #FFFFFF;
+}
+
 body {
   overflow-x: hidden;
 }
