@@ -51,24 +51,18 @@
 				var cloneIndex = $(".searchForm").length;
 
 				$('.search').on('click', 'button.add-more', clone);
-				$('.search').on('click', 'button.remove', remove);
 
-				function clone(){
-				    $(this).parents(".searchForm").clone()
-				        .appendTo(".search")
-				        .attr("id", "searchForm" +  cloneIndex)
-				        .find("*")
-				        .each(function() {
-				            var id = this.id || "";
-				            var match = id.match(regex) || [];
-				            if (match.length == 3) {
-				                this.id = match[1] + (cloneIndex);
-				            }
-				        })
-				    cloneIndex++;
-				}
-				function remove(){
-				    $(this).parents(".searchForm").remove();
+				function clone() {
+					$(this).parents(".searchForm").clone().appendTo(".search")
+							.attr("id", "searchForm" + cloneIndex).find("*")
+							.each(function() {
+								var id = this.id || "";
+								var match = id.match(regex) || [];
+								if (match.length == 3) {
+									this.id = match[1] + (cloneIndex);
+								}
+							})
+					cloneIndex++;
 				}
 			});
 </script>
@@ -114,163 +108,163 @@
 				%>
 				<form method="post" action="searchServlet">
 					<div class="search">
-							<table id="searchForm1" class="searchForm">
-								<tr>
-									<td>SELECT TABLE*:</td>
-									<td>
-										<div class="searchDropdown">
+						<table id="searchForm1" class="searchForm">
+							<tr>
+								<td>SELECT TABLE*:</td>
+								<td>
+									<div class="searchDropdown">
+										<%
+											int statementCount = 0;
+										%>
+										<select name="table[]" class="table" id="<%=statementCount%>"
+											onchange="change(this);">
+											<option>---Select Table---</option>
 											<%
-												int statementCount = 0;
+												QueryDataManager queryDataManager = new QueryDataManager(request);
+												ArrayList<String> tableName = queryDataManager.getTables();
+												for (int i = 0; i < tableName.size(); i++) {
 											%>
-											<select name="table[]" class="table" id="<%=statementCount%>"
-												onchange="change(this);">
-												<option>---Select Table---</option>
-												<%
-													QueryDataManager queryDataManager = new QueryDataManager(request);
-													ArrayList<String> tableName = queryDataManager.getTables();
-													for (int i = 0; i < tableName.size(); i++) {
-												%>
-												<option value="<%=tableName.get(i)%>"><%=tableName.get(i)%></option>
-												<%
-													}
-												%>
-											</select>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>SELECT COLUMN*:</td>
-									<td>
-										<div class="searchDropdown">
-											<select name="column[]" id="column<%=statementCount%>">
-												<option>---Select Table First---</option>
-											</select>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>CONDITION:</td>
-									<td><input type="text" name="condition[]" id="condition"
-										placeholder="Condition" /></td>
-									<%
-										statementCount++;
-									%>
-								</tr>
-								<tr>
-                  <td>
-                  <button class="searchFormBtn add-more" type="button">Add</button>
-							<button class="searchFormBtn remove" type="button">Remove</button>
-							</td>
-                </tr>
-							</table>
-							</div>
-							<%
-								request.setAttribute("statementCount", statementCount);
-							%>
-
-						</div>
-						<p id="importantNote">*Compulsory fields.</p>
-						<p>
-							<input id="submitQuery" type="submit" value="Query" />
-						</p>
-				</form>
-				<div class="col-md-12">
-					<h1>Search result</h1>
+											<option value="<%=tableName.get(i)%>"><%=tableName.get(i)%></option>
+											<%
+												}
+											%>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>SELECT COLUMN*:</td>
+								<td>
+									<div class="searchDropdown">
+										<select name="column[]" id="column<%=statementCount%>">
+											<option>---Select Table First---</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>CONDITION:</td>
+								<td><input type="text" name="condition[]" id="condition"
+									placeholder="Condition" /></td>
+								<%
+									statementCount++;
+								%>
+							</tr>
+							<tr>
+								<td>
+									<button class="searchFormBtn add-more" type="button">Add</button>
+								</td>
+							</tr>
+						</table>
+					</div>
 					<%
-						int resultCount = (Integer) request.getAttribute("statementCount");
-						String table = request.getParameter("table");
-						String column = request.getParameter("column");
-						String condition = request.getParameter("condition");
-						System.out.println(statementCount + "," + resultCount);
-						if (filterStatus != null && filterStatus.equals("success1")) {
+						request.setAttribute("statementCount", statementCount);
 					%>
-					<p>
-						Query: <strong>SELECT</strong>
-						<%=column%>
-						<strong>FROM</strong>
-						<%=table%></p>
-					<table class="searchQuery">
+				
+			</div>
+			<p id="importantNote">*Compulsory fields.</p>
+			<p>
+				<input id="submitQuery" type="submit" value="Query"
+					onclick="generateIds()" />
+			</p>
+			</form>
+			<div class="col-md-12">
+				<h1>Search result</h1>
+				<%
+					int resultCount = (Integer) request.getAttribute("statementCount");
+					String table = request.getParameter("table");
+					String column = request.getParameter("column");
+					String condition = request.getParameter("condition");
+					System.out.println(statementCount + "," + resultCount);
+					if (filterStatus != null && filterStatus.equals("success1")) {
+				%>
+				<p>
+					Query: <strong>SELECT</strong>
+					<%=column%>
+					<strong>FROM</strong>
+					<%=table%></p>
+				<table class="searchQuery">
+					<%
+						QueryData queryData = (QueryData) request.getAttribute("queryData");
+					%>
+					<tr id="searchResultHeader">
 						<%
-							QueryData queryData = (QueryData) request.getAttribute("queryData");
+							for (int i = 0; i < queryData.getColumnName().size(); i++) {
 						%>
-						<tr id="searchResultHeader">
-							<%
-								for (int i = 0; i < queryData.getColumnName().size(); i++) {
-							%>
-							<td><%=queryData.getColumnName().get(i).toUpperCase()%> <%
+						<td><%=queryData.getColumnName().get(i).toUpperCase()%> <%
  	}
  %></td>
-						</tr>
-						<%
-							int x = 0;
-								for (int i = 0; i < queryData.getColumnData().size(); i++) {
-									if (i % queryData.getColumnName().size() == 0) {
-						%>
-						<tr>
-							<%
-								}
-							%>
-							<td><%=queryData.getColumnData().get(i)%></td>
-							<%
-								x++;
-										if (x == queryData.getColumnName().size()) {
-							%>
-						</tr>
-						<%
-							x = 0;
-									}
-								}
-						%>
-
-					</table>
+					</tr>
 					<%
-						} else if (filterStatus != null && filterStatus.equals("success2")) {
+						int x = 0;
+							for (int i = 0; i < queryData.getColumnData().size(); i++) {
+								if (i % queryData.getColumnName().size() == 0) {
 					%>
-					<p>
-						Query: <strong>SELECT</strong>
-						<%=column%>
-						<strong>FROM</strong>
-						<%=table%>
-						<strong>WHERE</strong>
-						<%=condition%></p>
-					<table>
+					<tr>
 						<%
-							QueryData queryData = (QueryData) request.getAttribute("queryData");
-						%>
-						<tr id="searchResultHeader">
-							<%
-								for (int i = 0; i < queryData.getColumnName().size(); i++) {
-							%>
-							<td><%=queryData.getColumnName().get(i).toUpperCase()%> <%
- 	}
- %></td>
-						</tr>
-						<%
-							int x = 0;
-								for (int i = 0; i < queryData.getColumnData().size(); i++) {
-									if (i % queryData.getColumnName().size() == 0) {
-						%>
-						<tr>
-							<%
-								}
-							%>
-							<td><%=queryData.getColumnData().get(i)%></td>
-							<%
-								x++;
-										if (x == queryData.getColumnName().size()) {
-							%>
-						</tr>
-						<%
-							x = 0;
-									}
-								}
 							}
 						%>
-					</table>
-				</div>
+						<td><%=queryData.getColumnData().get(i)%></td>
+						<%
+							x++;
+									if (x == queryData.getColumnName().size()) {
+						%>
+					</tr>
+					<%
+						x = 0;
+								}
+							}
+					%>
+
+				</table>
+				<%
+					} else if (filterStatus != null && filterStatus.equals("success2")) {
+				%>
+				<p>
+					Query: <strong>SELECT</strong>
+					<%=column%>
+					<strong>FROM</strong>
+					<%=table%>
+					<strong>WHERE</strong>
+					<%=condition%></p>
+				<table>
+					<%
+						QueryData queryData = (QueryData) request.getAttribute("queryData");
+					%>
+					<tr id="searchResultHeader">
+						<%
+							for (int i = 0; i < queryData.getColumnName().size(); i++) {
+						%>
+						<td><%=queryData.getColumnName().get(i).toUpperCase()%> <%
+ 	}
+ %></td>
+					</tr>
+					<%
+						int x = 0;
+							for (int i = 0; i < queryData.getColumnData().size(); i++) {
+								if (i % queryData.getColumnName().size() == 0) {
+					%>
+					<tr>
+						<%
+							}
+						%>
+						<td><%=queryData.getColumnData().get(i)%></td>
+						<%
+							x++;
+									if (x == queryData.getColumnName().size()) {
+						%>
+					</tr>
+					<%
+						x = 0;
+								}
+							}
+						}
+					%>
+				</table>
 			</div>
 		</div>
-		<!-- /#page-content-wrapper -->
+	</div>
+	<!-- /#page-content-wrapper -->
 
 	</div>
 	<!-- /#wrapper -->
@@ -287,5 +281,21 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		document.getElementById("submitQuery").addEventListener("click",
+				function(event) {
+					event.preventDefault();
+				});
+
+		function generateIds() {
+			var divArray = document.getElementsByTagName("div"), iterate;
+			console.log(divArray.length);
+			for (var i = 0; i < divArray.length; i++) {
+				//if (divArray[i] && /searchForm/.test(divArray[i].className) == 0) {
+				console.log(divArray[i].className);
+				//}
+			}
+		}
+	</script>
 </body>
 </html>
