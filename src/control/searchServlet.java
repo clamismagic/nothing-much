@@ -60,38 +60,40 @@ public class searchServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		String column = request.getParameter("column");
-		String table = request.getParameter("table");
-		String condition = request.getParameter("condition");
+		String[] column = request.getParameterValues("column[]");
+		String[] table = request.getParameterValues("table[]");
+		String[] condition = request.getParameterValues("condition[]");
 		QueryDataManager queryDataManager = new QueryDataManager(request);
-		if (column == null) {
-			response.sendRedirect("search.jsp?status=error2");
-			return;
-		} else if (table == null) {
-			response.sendRedirect("search.jsp?status=error2");
-			return;
-		} else if (column != "" && table != "" && condition == null || condition == "") {
-			QueryData queryData = new QueryData();
-			queryData = queryDataManager.getData(column, table);
-			if (queryData != null) {
-				request.setAttribute("queryData", queryData);
-				request.getRequestDispatcher("search.jsp?status=success1").forward(request, response);
+		for (int i = 0; i < column.length; i++) {
+			if (column == null) {
+				response.sendRedirect("search.jsp?status=error2");
 				return;
-			} else {
-				response.sendRedirect("search.jsp?status=error");
-			}
-		} else if (column != "" && table != "" && condition != null && condition != "") {
-			QueryData queryData = new QueryData();
-			queryData = queryDataManager.getData(column, table, condition);
-			if (queryData != null) {
-				request.setAttribute("queryData", queryData);
-				request.getRequestDispatcher("search.jsp?status=success2").forward(request, response);
+			} else if (table == null) {
+				response.sendRedirect("search.jsp?status=error2");
 				return;
+			} else if (column != "" && table != "" && condition == null || condition == "") {
+				QueryData queryData = new QueryData();
+				queryData = queryDataManager.getData(column, table);
+				if (queryData != null) {
+					request.setAttribute("queryData", queryData);
+					request.getRequestDispatcher("search.jsp?status=success1").forward(request, response);
+					return;
+				} else {
+					response.sendRedirect("search.jsp?status=error");
+				}
+			} else if (column != "" && table != "" && condition != null && condition != "") {
+				QueryData queryData = new QueryData();
+				queryData = queryDataManager.getData(column, table, condition);
+				if (queryData != null) {
+					request.setAttribute("queryData", queryData);
+					request.getRequestDispatcher("search.jsp?status=success2").forward(request, response);
+					return;
+				} else {
+					response.sendRedirect("search.jsp?status=error");
+				}
 			} else {
-				response.sendRedirect("search.jsp?status=error");
+				response.sendRedirect("search.jsp?status=errror");
 			}
-		} else {
-			response.sendRedirect("search.jsp?status=errror");
 		}
 	}
 

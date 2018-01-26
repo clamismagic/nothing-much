@@ -160,14 +160,13 @@
 					<%
 						request.setAttribute("statementCount", statementCount);
 					%>
-				
+					<p id="importantNote">*Compulsory fields.</p>
+					<p>
+						<input id="submitQuery" type="submit" value="Query"
+							onclick="generateIds()" />
+					</p>
+				</form>
 			</div>
-			<p id="importantNote">*Compulsory fields.</p>
-			<p>
-				<input id="submitQuery" type="submit" value="Query"
-					onclick="generateIds()" />
-			</p>
-			</form>
 			<div class="col-md-12">
 				<h1>Search result</h1>
 				<%
@@ -279,23 +278,6 @@
 			e.preventDefault();
 			$("#wrapper").toggleClass("toggled");
 		});
-	</script>
-
-	<script type="text/javascript">
-		document.getElementById("submitQuery").addEventListener("click",
-				function(event) {
-					event.preventDefault();
-				});
-
-		function generateIds() {
-			var divArray = document.getElementsByTagName("div"), iterate;
-			console.log(divArray.length);
-			for (var i = 0; i < divArray.length; i++) {
-				//if (divArray[i] && /searchForm/.test(divArray[i].className) == 0) {
-				console.log(divArray[i].className);
-				//}
-			}
-		}
 	</script>
 </body>
 </html>

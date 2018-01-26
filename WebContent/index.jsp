@@ -81,7 +81,7 @@
 				<form method="post" action="filterServlet" onSubmit="return">
 					<p>
 					<%
-					for(String singlerisk : risk) {
+						for(String singlerisk : risk) {
 					%>
 					<input class="filterCheckbox" type="checkbox" name="metrics"
 							value="<%=singlerisk %>"><%=singlerisk%></input><br>
