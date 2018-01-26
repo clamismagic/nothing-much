@@ -43,8 +43,9 @@
 		<!-- Sidebar -->
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
-				<li class="sidebar-brand"><a href="index.html">The Four
-						Horsemen</a></li>
+				<li class="sidebar-brand"><a href="index.jsp"><img
+						class="logoSidebar" alt="The Four Horsemen"
+						src="images/logo_Sidebar.png" /></a></li>
 				<li><a href="index.jsp">To the field</a></li>
 				<li><a href="search.jsp">To find</a></li>
 			</ul>
@@ -54,9 +55,8 @@
 		<!-- Page Content -->
 		<div id="page-content-wrapper">
 			<div>
-				<a href="#menu-toggle" class="btn btn-secondary menuAlign"
-					id="menu-toggle">Menu</a> <img class="logo" alt="The Four Horsemen"
-					src="images/logo.jpg" />
+				<a href="#menu-toggle" class="menuBtn menuAlign" id="menu-toggle">Menu</a>
+				<img class="logo" alt="The Four Horsemen" src="images/logo_hive.png" />
 				<hr />
 			</div>
 			<div class="col-md-3 align metric-border">
