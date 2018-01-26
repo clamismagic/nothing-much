@@ -142,8 +142,7 @@
 				Date date = new Date();
 			%>
 
-			<div class="col-md-9 align" style="background-color: white;" id="main"></div>
-			<div style="background-color: white;">
+			<div class="col-md-9 align" id="main"></div>
 			<div id="missingHost"></div>
 			<div class="slidecontainer" bottom:5px>
 				<input type="range" min="<%=date.getTime() - 1514829136%>"
@@ -152,7 +151,6 @@
 				<p>
 					Value: <span id="demo"></span>
 				</p>
-			</div>
 			</div>
 
 		</div>
