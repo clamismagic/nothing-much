@@ -72,24 +72,12 @@
 	<div id="wrapper">
 
 		<!-- Sidebar -->
-		<div id="sidebar-wrapper">
-			<ul class="sidebar-nav">
-				<li class="sidebar-brand"><a href="index.jsp"><img
-						class="logoSidebar" alt="The Four Horsemen"
-						src="images/logo_Sidebar.png" /></a></li>
-				<li><a href="index.jsp">To the field</a></li>
-				<li><a href="search.jsp">To find</a></li>
-			</ul>
-		</div>
+		<jsp:include page="sidebar.html"></jsp:include>
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
 		<div id="page-content-wrapper">
-			<div>
-				<a href="#menu-toggle" class="menuBtn menuAlign" id="menu-toggle">Menu</a>
-				<img class="logo" alt="The Four Horsemen" src="images/logo_hive.png" />
-				<hr />
-			</div>
+			<jsp:include page="header.html"></jsp:include>
 			<div class="col-md-12">
 				<h1>Find something</h1>
 				<%
@@ -170,100 +158,77 @@
 			<div class="col-md-12">
 				<h1>Search result</h1>
 				<%
-					int resultCount = (Integer) request.getAttribute("statementCount");
-					String table = request.getParameter("table");
-					String column = request.getParameter("column");
-					String condition = request.getParameter("condition");
-					System.out.println(statementCount + "," + resultCount);
-					if (filterStatus != null && filterStatus.equals("success1")) {
+					if (filterStatus != null && filterStatus.equals("success")) {
+						int resultCount = (Integer) request.getAttribute("statementCount");
+						String[] table = request.getParameterValues("table[]");
+						String[] column = request.getParameterValues("column[]");
+						String[] condition = request.getParameterValues("condition[]");
+						System.out.println(statementCount + "," + resultCount);
+						int noOfQueriedItems = (Integer) request.getAttribute("noOfQueriedItems");
+						if (noOfQueriedItems == 0) {
+						} else {
+							for (int i = 0; i < noOfQueriedItems; i++) {
+								QueryData queryData = (QueryData) request.getAttribute("queryData" + i);
 				%>
 				<p>
 					Query: <strong>SELECT</strong>
-					<%=column%>
+					<%=column[i]%>
 					<strong>FROM</strong>
-					<%=table%></p>
-				<table class="searchQuery">
+					<%=table[i]%>
 					<%
-						QueryData queryData = (QueryData) request.getAttribute("queryData");
+						if (condition[i] != "") {
 					%>
+					<strong>WHERE</strong>
+					<%=condition[i]%>
+					<%
+						}
+					%>
+				</p>
+				<%
+					
+				%>
+				<table class="searchQuery">
 					<tr id="searchResultHeader">
 						<%
-							for (int i = 0; i < queryData.getColumnName().size(); i++) {
+							for (int j = 0; j < queryData.getColumnName().size(); j++) {
 						%>
-						<td><%=queryData.getColumnName().get(i).toUpperCase()%> <%
+						<td><%=queryData.getColumnName().get(j).toUpperCase()%> <%
  	}
  %></td>
 					</tr>
 					<%
 						int x = 0;
-							for (int i = 0; i < queryData.getColumnData().size(); i++) {
-								if (i % queryData.getColumnName().size() == 0) {
+									for (int j = 0; j < queryData.getColumnData().size(); j++) {
+										if (j % queryData.getColumnName().size() == 0) {
 					%>
 					<tr>
 						<%
 							}
 						%>
-						<td><%=queryData.getColumnData().get(i)%></td>
+						<td><%=queryData.getColumnData().get(j)%></td>
 						<%
 							x++;
-									if (x == queryData.getColumnName().size()) {
+											if (x == queryData.getColumnName().size()) {
 						%>
 					</tr>
 					<%
 						x = 0;
-								}
-							}
+										}
+									}
 					%>
 
 				</table>
 				<%
-					} else if (filterStatus != null && filterStatus.equals("success2")) {
-				%>
-				<p>
-					Query: <strong>SELECT</strong>
-					<%=column%>
-					<strong>FROM</strong>
-					<%=table%>
-					<strong>WHERE</strong>
-					<%=condition%></p>
-				<table>
-					<%
-						QueryData queryData = (QueryData) request.getAttribute("queryData");
-					%>
-					<tr id="searchResultHeader">
-						<%
-							for (int i = 0; i < queryData.getColumnName().size(); i++) {
-						%>
-						<td><%=queryData.getColumnName().get(i).toUpperCase()%> <%
- 	}
- %></td>
-					</tr>
-					<%
-						int x = 0;
-							for (int i = 0; i < queryData.getColumnData().size(); i++) {
-								if (i % queryData.getColumnName().size() == 0) {
-					%>
-					<tr>
-						<%
-							}
-						%>
-						<td><%=queryData.getColumnData().get(i)%></td>
-						<%
-							x++;
-									if (x == queryData.getColumnName().size()) {
-						%>
-					</tr>
-					<%
-						x = 0;
-								}
-							}
+					}
 						}
-					%>
-				</table>
+					}
+				%>
 			</div>
 		</div>
-	</div>
-	<!-- /#page-content-wrapper -->
+		<!-- /#page-content-wrapper -->
+
+		<!-- Footer -->
+		<jsp:include page="footer.html"></jsp:include>
 
 	</div>
 	<!-- /#wrapper -->

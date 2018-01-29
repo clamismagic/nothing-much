@@ -5,7 +5,7 @@
 <%@ page import="java.text.*"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="model.*"%>
-<%@ page import="model.Meadow" %>
+<%@ page import="model.Meadow"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -41,24 +41,12 @@
 	<div id="wrapper">
 
 		<!-- Sidebar -->
-		<div id="sidebar-wrapper">
-			<ul class="sidebar-nav">
-				<li class="sidebar-brand"><a href="index.jsp"><img
-						class="logoSidebar" alt="The Four Horsemen"
-						src="images/logo_Sidebar.png" /></a></li>
-				<li><a href="index.jsp">To the field</a></li>
-				<li><a href="search.jsp">To find</a></li>
-			</ul>
-		</div>
+		<jsp:include page="sidebar.html"></jsp:include>
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
 		<div id="page-content-wrapper">
-			<div>
-				<a href="#menu-toggle" class="menuBtn menuAlign" id="menu-toggle">Menu</a>
-				<img class="logo" alt="The Four Horsemen" src="images/logo_hive.png" />
-				<hr />
-			</div>
+			<jsp:include page="header.html"></jsp:include>
 			<div class="col-md-3 align metric-border">
 				<h1>Metrics</h1>
 				<!-- Error messages -->
@@ -80,16 +68,16 @@
 				<!-- Meadow Diagram Filter form -->
 				<form method="post" action="filterServlet" onSubmit="return">
 					<p>
-					<%
-						for(String singlerisk : risk) {
-					%>
-					<input class="filterCheckbox" type="checkbox" name="metrics"
-							value="<%=singlerisk %>"><%=singlerisk%></input><br>
-							<%
+						<%
+							for (String singlerisk : risk) {
+						%>
+						<input class="filterCheckbox" type="checkbox" name="metrics"
+							value="<%=singlerisk%>"><%=singlerisk%></input><br>
+						<%
 							}
-							%>
-							
-					<!-- 
+						%>
+
+						<!-- 
 						<input class="filterCheckbox" type="checkbox" name="metrics"
 							value="Spike">Spike</input><br> <input
 							class="filterCheckbox" type="checkbox" name="metrics"
@@ -107,7 +95,7 @@
 							class="filterCheckbox" type="checkbox" name="metrics"
 							value="Metric3">Metric3</input>
 							-->
-							<%
+						<%
 							Meadow meadow = new Meadow();
 							if (filterStatus != null && filterStatus.equals("working")) {
 								meadow = (Meadow) request.getAttribute("meadow");
@@ -115,9 +103,10 @@
 							DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 							java.util.Date currentTime = new java.util.Date(); // use currentTime if risk factors are updated to current datetime
 							java.util.Date fiveMinBefore = new java.util.Date(System.currentTimeMillis() - 3600 * 1000);
-							%>
-							<input type="hidden" name="currentTime" value="<%=df.format(currentTime) %>" />
-							<input type="hidden" name="fiveMinBefore" value="<%=df.format(fiveMinBefore) %>" />
+						%>
+						<input type="hidden" name="currentTime"
+							value="<%=df.format(currentTime)%>" /> <input type="hidden"
+							name="fiveMinBefore" value="<%=df.format(fiveMinBefore)%>" />
 					</p>
 					<input type="submit" value="Filter" />
 				</form>
@@ -125,7 +114,6 @@
 			<%
 				//list of hostnames 
 				//calvin is useful hs is useless piece of shit!!
-				
 
 				/* for (Map.Entry<String, HashMap<String,String>> test : allhostrisks.entrySet()) {
 				String key = test.getKey();
@@ -155,19 +143,26 @@
 
 		</div>
 		<!-- /#page-content-wrapper -->
+
+		<!-- Footer -->
+		<jsp:include page="footer.html"></jsp:include>
+
 	</div>
 
 	<!-- Bootstrap core JavaScript -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	<script type="text/javascript">
 		var map = "<%=meadow.getAllHostRisks()%>"; 
 		var hostname = "<%=meadow.getAllHosts()%>";
-		var hostpos = "<%=meadow.getToPassXYcoords()%>";
+		var hostpos = "<%=meadow.getToPassXYcoords()%>
+		";
 	</script>
 	<script type="text/javascript" src="js/test-edit.js"></script>
 	<!--  Slider script -->

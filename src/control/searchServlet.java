@@ -38,18 +38,22 @@ public class searchServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String tableName = request.getParameter("tableName");
 		String json = null;
-		if (tableName.equals("---Select Table---")) {
-			List<String> list = new ArrayList<String>();
-			list.add("---Select Table---");
-			json = new Gson().toJson(list);
-		} else {
-			QueryDataManager queryDataManager = new QueryDataManager(request);
-			List<String> queryData = queryDataManager.getColumns(tableName);
-			queryData.toString();
-			json = new Gson().toJson(queryData);
+		try {
+			if (tableName.equals("---Select Table---")) {
+				List<String> list = new ArrayList<String>();
+				list.add("---Select Table First---");
+				json = new Gson().toJson(list);
+			} else {
+				QueryDataManager queryDataManager = new QueryDataManager(request);
+				List<String> queryData = queryDataManager.getColumns(tableName);
+				queryData.toString();
+				json = new Gson().toJson(queryData);
+			}
+			response.setContentType("application/json");
+			response.getWriter().write(json);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		response.setContentType("application/json");
-		response.getWriter().write(json);
 	}
 
 	/**
@@ -64,37 +68,39 @@ public class searchServlet extends HttpServlet {
 		String[] table = request.getParameterValues("table[]");
 		String[] condition = request.getParameterValues("condition[]");
 		QueryDataManager queryDataManager = new QueryDataManager(request);
-		for (int i = 0; i < column.length; i++) {
-			if (column == null) {
-				response.sendRedirect("search.jsp?status=error2");
-				return;
-			} else if (table == null) {
-				response.sendRedirect("search.jsp?status=error2");
-				return;
-			} else if (column != "" && table != "" && condition == null || condition == "") {
-				QueryData queryData = new QueryData();
-				queryData = queryDataManager.getData(column, table);
-				if (queryData != null) {
-					request.setAttribute("queryData", queryData);
-					request.getRequestDispatcher("search.jsp?status=success1").forward(request, response);
-					return;
+		if (column == null || table == null) {
+			response.sendRedirect("search.jsp?status=error2");
+			return;
+		} else {
+			int i;
+			for (i = 0; i < column.length; i++) {
+				if (column[i] != "" && table[i] != "") {
+					QueryData queryData = new QueryData();
+					if (condition[i] == "") {
+						queryData = queryDataManager.getData(column[i], table[i]);
+						if (queryData != null) {
+							request.setAttribute("queryData" + i, queryData);
+
+						} else {
+							response.sendRedirect("search.jsp?status=error");
+						}
+					} else {
+						queryData = queryDataManager.getData(column[i], table[i], condition[i]);
+						if (queryData != null) {
+							request.setAttribute("queryData" + i, queryData);
+						} else {
+							response.sendRedirect("search.jsp?status=error");
+						}
+					}
 				} else {
 					response.sendRedirect("search.jsp?status=error");
 				}
-			} else if (column != "" && table != "" && condition != null && condition != "") {
-				QueryData queryData = new QueryData();
-				queryData = queryDataManager.getData(column, table, condition);
-				if (queryData != null) {
-					request.setAttribute("queryData", queryData);
-					request.getRequestDispatcher("search.jsp?status=success2").forward(request, response);
-					return;
-				} else {
-					response.sendRedirect("search.jsp?status=error");
-				}
-			} else {
-				response.sendRedirect("search.jsp?status=errror");
 			}
+			request.setAttribute("noOfQueriedItems", column.length);
+			request.getRequestDispatcher("search.jsp?status=success").forward(request, response);
+			return;
 		}
+
 	}
 
 }
