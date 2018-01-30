@@ -74,7 +74,7 @@ public class searchServlet extends HttpServlet {
 		} else {
 			int i;
 			for (i = 0; i < column.length; i++) {
-				if (column[i] != "" && table[i] != "") {
+				if (column[i] != "" && table[i] != "" && column[i] != null && table[i] != null && !column[i].toLowerCase().trim().equals("---select table first---") && !table[i].toLowerCase().trim().equals("---select table---")) {
 					QueryData queryData = new QueryData();
 					if (condition[i] == "") {
 						queryData = queryDataManager.getData(column[i], table[i]);
@@ -83,6 +83,7 @@ public class searchServlet extends HttpServlet {
 
 						} else {
 							response.sendRedirect("search.jsp?status=error");
+							return;
 						}
 					} else {
 						queryData = queryDataManager.getData(column[i], table[i], condition[i]);
@@ -90,10 +91,12 @@ public class searchServlet extends HttpServlet {
 							request.setAttribute("queryData" + i, queryData);
 						} else {
 							response.sendRedirect("search.jsp?status=error");
+							return;
 						}
 					}
 				} else {
-					response.sendRedirect("search.jsp?status=error");
+					response.sendRedirect("search.jsp?status=error2");
+					return;
 				}
 			}
 			request.setAttribute("noOfQueriedItems", column.length);

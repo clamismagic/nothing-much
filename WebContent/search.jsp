@@ -30,7 +30,7 @@
 		//var table = $("select#table").val();
 		var idx = data.selectedIndex;
 		var table = data.options[idx].value;
-		var id = data.id;
+		var id = data.id.slice(5);
 		$.get('searchServlet', {
 			tableName : table
 		}, function(response) {
@@ -94,17 +94,17 @@
 				<%
 					}
 				%>
+				<%
+							int statementCount = 0;
+						%>
 				<form method="post" action="searchServlet">
 					<div class="search">
-						<table id="searchForm1" class="searchForm">
+						<table id="searchForm0" class="searchForm">
 							<tr>
 								<td>SELECT TABLE*:</td>
 								<td>
 									<div class="searchDropdown">
-										<%
-											int statementCount = 0;
-										%>
-										<select name="table[]" class="table" id="<%=statementCount%>"
+										<select name="table[]" class="table" id="table0"
 											onchange="change(this);">
 											<option>---Select Table---</option>
 											<%
@@ -124,7 +124,7 @@
 								<td>SELECT COLUMN*:</td>
 								<td>
 									<div class="searchDropdown">
-										<select name="column[]" id="column<%=statementCount%>">
+										<select name="column[]" id="column0">
 											<option>---Select Table First---</option>
 										</select>
 									</div>
@@ -134,13 +134,10 @@
 								<td>CONDITION:</td>
 								<td><input type="text" name="condition[]" id="condition"
 									placeholder="Condition" /></td>
-								<%
-									statementCount++;
-								%>
 							</tr>
 							<tr>
 								<td>
-									<button class="searchFormBtn add-more" type="button">Add</button>
+									<button class="searchFormBtn add-more" type="button" onclick=<% statementCount++; %>>Add</button>
 								</td>
 							</tr>
 						</table>
