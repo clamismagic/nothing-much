@@ -81,7 +81,7 @@ public class MeadowManager {
 					}
 				}
 				avgRisk /= checkboxes.length;
-				int distance = (int) Math.sqrt((((1 - avgRisk) / 2) * 800 * 600 / Math.PI)) + 40;
+				int distance = (int) Math.sqrt((((1 - avgRisk) / 2) * 800 * 400 / Math.PI)) + 20;
 				int[] currenthostcords = null;
 				int attemptCoord = 0;
 				while (currenthostcords == null) {
@@ -89,7 +89,7 @@ public class MeadowManager {
 						break;
 					}
 					currenthostcords = HostGeneration.generatexypos(degrees % 360, distance, posofhostoncanvas);
-					degrees += 10;
+					degrees += 5;
 				}
 				if (currenthostcords != null) {
 					toPassXYcoords.add(singlehostentry + "=" + currenthostcords[0] + "," + currenthostcords[1]);
@@ -100,9 +100,9 @@ public class MeadowManager {
 				}
 			}
 			
-			toPassXYcoords.add("centre=400,300");
+		/*	toPassXYcoords.add("centre=400,200");
 			allhostrisks.put("centre", "10,0 10,10 20,10 0,10 10,10 4,18 10,10 16,18 10,10");
-			allHosts.add("centre");
+			allHosts.add("centre"); */
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

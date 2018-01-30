@@ -131,7 +131,7 @@
 			%>
 
 			<div class="col-md-9 align" id="main"></div>
-			<div id="missingHost"></div>
+			 <div id="missingHost"></div>
 			<div class="slidecontainer" bottom:5px>
 				<input type="range" min="<%=date.getTime() - 1514829136%>"
 					max="<%=date.getTime()%>" value="<%=date.getTime()%>"

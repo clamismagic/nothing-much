@@ -24,6 +24,16 @@ var svgPoints = ["10,0", "10,10", "20,10", "0,10", "10,10", "4,18", "10,10", "16
 
 var hostid = "10.0.1.1";//???
 
+//coordinates for midpoint
+mainDiv.innerHTML += "<div id='centerpoint' width='10px' height='10px' z-index='1'>&nbsp;</div>";
+var centerpoint = document.getElementById("centerpoint");
+centerpoint.style.position = "absolute";
+centerpoint.style.top = "200px";
+centerpoint.style.left = "400px";
+centerpoint.style.borderRadius = "50%";
+centerpoint.style.color = "red";
+centerpoint.style.backgroundColor = "red";
+
 for (i = 0; i < hostnameArray.length; i++) {
 /*	if (coords[1] > 400) {
 		ttposition = "top";
@@ -41,6 +51,7 @@ for (i = 0; i < hostnameArray.length; i++) {
 			//break;
 		}
 	});
+	
 	if (idname.localeCompare("") != 0) {
 		var htmlStr = '<a href="index-host.html" target="_blank" data-toggle="tooltip" data-html="true" data-placement="' + ttposition + '" title="" data-original-title="<h5>Host Name / Host ID / IP address</h5><hr><p>IP address: 10.0.1.1</p><p>Host name: Corporate-Web-Server</p><p>Host Owner: Ben</p><p>Location: Level 2-1</p>"><svg width="20" height="20"><polygon points="' + correctCoords + '" style="fill-opacity:0;stroke:white;stroke-width:1;fill-rule:nonzero;" /></svg></a></div>';
 		mainDiv.innerHTML += '<div id="' + idname + '">' + htmlStr;
@@ -58,6 +69,6 @@ for (i = 0; i < hostnameArray.length; i++) {
 		currentBox.style.top = XYPos[1] + "px";
 		currentBox.style.left = XYPos[0] + "px";
 	} else {
-		document.getElementById("missingHost").innerHTML += hostnameArray[i] + "\n";
+		//document.getElementById("missingHost").innerHTML += hostnameArray[i] + "\n";
 	}
 }
