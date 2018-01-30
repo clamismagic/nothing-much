@@ -28,7 +28,7 @@ var hostid = "10.0.1.1";//???
 mainDiv.innerHTML += "<div id='centerpoint' width='10px' height='10px' z-index='1'>&nbsp;</div>";
 var centerpoint = document.getElementById("centerpoint");
 centerpoint.style.position = "absolute";
-centerpoint.style.top = "200px";
+centerpoint.style.top = "250px";
 centerpoint.style.left = "400px";
 centerpoint.style.borderRadius = "50%";
 centerpoint.style.color = "red";

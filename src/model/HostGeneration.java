@@ -59,7 +59,7 @@ public class HostGeneration {
 		}
 
 		return new int[] { (int) (400 + (distance * Math.cos(Math.toRadians(angle)) * changexy[0])),
-				(int) (200 + (distance * Math.sin(Math.toRadians(angle)) * changexy[1])) };
+				(int) (250 + (distance * Math.sin(Math.toRadians(angle)) * changexy[1])) };
 
 	}
 

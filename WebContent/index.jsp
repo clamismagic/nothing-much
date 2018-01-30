@@ -69,33 +69,23 @@
 				<form method="post" action="filterServlet" onSubmit="return">
 					<p>
 						<%
+							// Get selectedMetrics
+							String[] selectedMetrics = request.getParameterValues("metrics");
 							for (String singlerisk : risk) {
 						%>
 						<input class="filterCheckbox" type="checkbox" name="metrics"
-							value="<%=singlerisk%>"><%=singlerisk%></input><br>
+							value="<%=singlerisk%>"
+							<%
+								if (selectedMetrics != null) {
+								for (int i=0; i < selectedMetrics.length; i++) {
+									if (singlerisk.equals(selectedMetrics[i])) {
+										out.print("checked");
+									}
+								}}
+							%>
+							><%=singlerisk%></input><br>
 						<%
 							}
-						%>
-
-						<!-- 
-						<input class="filterCheckbox" type="checkbox" name="metrics"
-							value="Spike">Spike</input><br> <input
-							class="filterCheckbox" type="checkbox" name="metrics"
-							value="Periodicity">Periodicity</input><br> <input
-							class="filterCheckbox" type="checkbox" name="metrics"
-							value="Domain names">Domain names</input><br> <input
-							class="filterCheckbox" type="checkbox" name="metrics"
-							value="Port access">Port access</input><br> <input
-							class="filterCheckbox" type="checkbox" name="metrics"
-							value="Parent-Child">Parent-Child</input><br> <input
-							class="filterCheckbox" type="checkbox" name="metrics"
-							value="Metric1">Metric1</input><br> <input
-							class="filterCheckbox" type="checkbox" name="metrics"
-							value="Metric2">Metric2</input><br> <input
-							class="filterCheckbox" type="checkbox" name="metrics"
-							value="Metric3">Metric3</input>
-							-->
-						<%
 							Meadow meadow = new Meadow();
 							if (filterStatus != null && filterStatus.equals("working")) {
 								meadow = (Meadow) request.getAttribute("meadow");
@@ -112,32 +102,17 @@
 				</form>
 			</div>
 			<%
-				//list of hostnames 
-				//calvin is useful hs is useless piece of shit!!
-
-				/* for (Map.Entry<String, HashMap<String,String>> test : allhostrisks.entrySet()) {
-				String key = test.getKey();
-				StringBuilder allvalues = new StringBuilder();
-				   HashMap<String,String> value = test.getValue();
-				   for (Map.Entry<String, String> testing : value.entrySet()) {
-				   	String keys = testing.getKey();
-				   	String values = testing.getValue();
-				   	allvalues.append(values +" ");
-				       System.out.println("Hostname : " + key + " checkbox: " + keys + " inside value: " + values);
-				   }
-				   System.out.println(allvalues);
-				}  */
 				Date date = new Date();
 			%>
 
 			<div class="col-md-9 align" id="main"></div>
 			 <div id="missingHost"></div>
-			<div class="slidecontainer" bottom:5px>
+			<div class="slidecontainer" bottom="5px" onmousedown="viewTime()" onmouseup="passtimestamp()">
 				<input type="range" min="<%=date.getTime() - 1514829136%>"
 					max="<%=date.getTime()%>" value="<%=date.getTime()%>"
 					class="slider" id="myRange">
 				<p>
-					Value: <span id="demo"></span>
+					Value: <span id="demo">Now</span>
 				</p>
 			</div>
 
@@ -154,30 +129,44 @@
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 		var map = "<%=meadow.getAllHostRisks()%>"; 
 		var hostname = "<%=meadow.getAllHosts()%>";
-		var hostpos = "<%=meadow.getToPassXYcoords()%>
-		";
+		var hostpos = "<%=meadow.getToPassXYcoords()%>";
 	</script>
-	<script type="text/javascript" src="js/test-edit.js"></script>
 	<!--  Slider script -->
 	<script>
-		var slider = document.getElementById("myRange");
-		var output = document.getElementById("demo");
-		output.innerHTML = "Now";
-
-		slider.oninput = function() {
-			var utcSeconds = Math.floor(this.value / 1000);
-			console.log(utcSeconds);
+		function passtimestamp() {
+			var slider = document.getElementById("myRange");
+			var output = document.getElementById("demo");
+			
+			var utcSeconds = Math.floor(slider.value / 1000);
 			var date = new Date(utcSeconds * 1000);
-			output.innerHTML = date;
+			
+			$.ajax({
+			    url: "/control/filterServlet.java",
+			    data: {
+			        postVariableName: date
+			    },
+			    type: 'POST'
+			});
+		}
+		
+		function viewTime() {
+			var slider = document.getElementById("myRange");
+			var output = document.getElementById("demo");
+			
+			slider.oninput = function() {
+				var utcSeconds = Math.floor(slider.value / 1000);
+				var date = new Date(utcSeconds * 1000);
+				output.innerHTML = date;
+			}
 		}
 	</script>
+	<script type="text/javascript" src="js/test-edit.js"></script>
 	<!-- Menu Toggle Script -->
 	<script>
 		$("#menu-toggle").click(function(e) {
