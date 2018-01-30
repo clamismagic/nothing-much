@@ -3,11 +3,6 @@
  * Copyright 2013-2017 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)
  */
-
-.svg-icon path {
-	fill: #FFFFFF;
-}
-
 body {
   overflow-x: hidden;
 }
@@ -89,9 +84,9 @@ body {
 }
 
 .sidebar-nav>.sidebar-brand {
-  height: 75px;
+  height: 66.22px;
   font-size: 18px;
-  line-height: 70px;
+  line-height: 61.22px;
 }
 
 .sidebar-nav>.sidebar-brand a {
@@ -105,8 +100,35 @@ body {
 
 /* Custom Style */
 
+body {
+	overflow: auto;
+}
+
 .align {
 	float: left;
+}
+
+#copyright {
+	text-align: center;
+}
+
+#errortitle {
+    text-align: center;
+    font-size: 8em;
+    color: red;
+}
+
+.errorcontent {
+    text-align: justify;
+    font-size: 2em;
+    line-height: 1.5em;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#errorthankyou {
+    text-align: center;
 }
 
 #importantNote {
