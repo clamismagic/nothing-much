@@ -41,7 +41,7 @@ public class HostGenSQL {
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				if (count++ >= 100) {
+				if (count++ >= 90) {
 					break;
 				}
 				allHosts.add(rs.getString(1));
