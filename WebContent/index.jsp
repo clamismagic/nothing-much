@@ -148,7 +148,7 @@
 		<jsp:include page="footer.html"></jsp:include>
 
 	</div>
-<!-- test -->
+
 	<!-- Bootstrap core JavaScript -->
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>

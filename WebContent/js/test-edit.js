@@ -72,4 +72,3 @@ for (i = 0; i < hostnameArray.length; i++) {
 		//document.getElementById("missingHost").innerHTML += hostnameArray[i] + "\n";
 	}
 }
-//test

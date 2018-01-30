@@ -1,4 +1,3 @@
-//test
 package model;
 
 import java.sql.Connection;
