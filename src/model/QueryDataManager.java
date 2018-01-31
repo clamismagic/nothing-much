@@ -61,25 +61,6 @@ public class QueryDataManager {
 		return queryData;
 	}
 
-	/*
-	 * public ArrayList<QueryData> selectData(String host) { ArrayList<QueryData>
-	 * queryData = new ArrayList<QueryData>(); try { String selectDataSQL =
-	 * "SELECT ? from test"; PreparedStatement selectDataPstmt =
-	 * conn.prepareStatement(selectDataSQL); selectDataPstmt.setString(1, host);
-	 * ResultSet selectDataRs = selectDataPstmt.executeQuery(); while
-	 * (selectDataRs.next()) { int id = selectDataRs.getInt("id"); String hostName =
-	 * selectDataRs.getString("hostname"); String timeStamp =
-	 * selectDataRs.getString("timestamp"); double riskFactor =
-	 * selectDataRs.getDouble("riskfactor"); String riskName =
-	 * selectDataRs.getString("riskName");
-	 * 
-	 * QueryData data = new QueryData(id, hostName, timeStamp, riskFactor,
-	 * riskName); queryData.add(data); } } catch (Exception e) {
-	 * e.printStackTrace(); }
-	 * 
-	 * return queryData; }
-	 */
-
 	public QueryData getData(String column, String table) {
 		QueryData queryData = new QueryData();
 		ArrayList<String> columnName = new ArrayList<String>();

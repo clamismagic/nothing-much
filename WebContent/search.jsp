@@ -26,8 +26,7 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
-	/*$("#table").change(function(data)*/function change(data) {
-		//var table = $("select#table").val();
+	function change(data) {
 		var idx = data.selectedIndex;
 		var table = data.options[idx].value;
 		var id = data.id.slice(5);
@@ -95,8 +94,8 @@
 					}
 				%>
 				<%
-							int statementCount = 0;
-						%>
+					int statementCount = 0;
+				%>
 				<form method="post" action="searchServlet">
 					<div class="search">
 						<table id="searchForm0" class="searchForm">
@@ -137,7 +136,8 @@
 							</tr>
 							<tr>
 								<td>
-									<button class="searchFormBtn add-more" type="button" onclick=<% statementCount++; %>>Add</button>
+									<button class="searchFormBtn add-more" type="button"
+										onclick=<%statementCount++;%>>Add</button>
 								</td>
 							</tr>
 						</table>
@@ -156,11 +156,9 @@
 				<h1>Search result</h1>
 				<%
 					if (filterStatus != null && filterStatus.equals("success")) {
-						int resultCount = (Integer) request.getAttribute("statementCount");
 						String[] table = request.getParameterValues("table[]");
 						String[] column = request.getParameterValues("column[]");
 						String[] condition = request.getParameterValues("condition[]");
-						System.out.println(statementCount + "," + resultCount);
 						int noOfQueriedItems = (Integer) request.getAttribute("noOfQueriedItems");
 						if (noOfQueriedItems == 0) {
 						} else {
@@ -181,17 +179,15 @@
 						}
 					%>
 				</p>
-				<%
-					
-				%>
 				<table class="searchQuery">
 					<tr id="searchResultHeader">
 						<%
 							for (int j = 0; j < queryData.getColumnName().size(); j++) {
 						%>
-						<td><%=queryData.getColumnName().get(j).toUpperCase()%> <%
- 	}
- %></td>
+						<td><%=queryData.getColumnName().get(j).toUpperCase()%>
+						<%
+ 							}
+						 %></td>
 					</tr>
 					<%
 						int x = 0;
@@ -218,6 +214,10 @@
 				<%
 					}
 						}
+					} else if (filterStatus != null && filterStatus.equals("noData")) {
+				%>
+				<p id="noData">We are unable to find anything. If you think this is a mistake, please contact your system administrator.</p>
+				<%
 					}
 				%>
 			</div>

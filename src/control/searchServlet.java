@@ -79,8 +79,12 @@ public class searchServlet extends HttpServlet {
 					if (condition[i] == "") {
 						queryData = queryDataManager.getData(column[i], table[i]);
 						if (queryData != null) {
+							if (queryData.getColumnData().size() != 0) {
 							request.setAttribute("queryData" + i, queryData);
-
+							} else {
+								response.sendRedirect("search.jsp?status=noData");
+								return;
+							}
 						} else {
 							response.sendRedirect("search.jsp?status=error");
 							return;
