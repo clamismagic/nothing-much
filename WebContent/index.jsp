@@ -28,6 +28,13 @@
 <link rel="stylesheet" href="css/meadow/base.css" />
 <link rel="stylesheet" href="css/meadow/meadow.css" />
 <link rel="stylesheet" href="css/meadow/meadowTest.css" />
+
+<!-- Bootstrap core JavaScript -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
 <!-- Script -->
 <script>
 	$(document).ready(function(){
@@ -73,7 +80,7 @@
 							String[] selectedMetrics = request.getParameterValues("metrics");
 							for (String singlerisk : risk) {
 						%>
-						<input class="filterCheckbox" type="checkbox" name="metrics"
+						<input class="filterCheckbox" type="checkbox" name="metrics" id="filterMetrics"
 							value="<%=singlerisk%>"
 							<%
 								if (selectedMetrics != null) {
@@ -124,14 +131,6 @@
 
 	</div>
 
-	<!-- Bootstrap core JavaScript -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 	<script type="text/javascript">
 		var map = "<%=meadow.getAllHostRisks()%>"; 
 		var hostname = "<%=meadow.getAllHosts()%>";
@@ -143,19 +142,29 @@
 			var slider = document.getElementById("myRange");
 			var output = document.getElementById("demo");
 			
-			var selectedMetrics = [];
+			var metrics = [];
+			$("input:checkbox[name=metrics]:checked").each(function(){
+			    metrics.push($(this).val());
+			});
 			
-			
+			console.log(metrics);
 			
 			var utcSeconds = Math.floor(slider.value / 1000);
-			var currentTime = new Date(utcSeconds * 1000);
-			var fiveMinBefore = new Date((utcSeconds - 300) * 1000);
-			
+			var timeNow = new Date(utcSeconds * 1000);
+			var parsedMonth = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+			var parsedHour = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
+			var parsedMinSec = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
+			var currentTime = timeNow.getFullYear() + "-" + parsedMonth[timeNow.getMonth()] + "-" + timeNow.getDate() + " " + parsedHour[timeNow.getHours()] + ":" + parsedMinSec[timeNow.getMinutes()] + ":" + parsedMinSec[timeNow.getSeconds()];
+			var lowerTime = new Date((utcSeconds - 300) * 1000);
+			var fiveMinBefore = lowerTime.getFullYear() + "-" + parsedMonth[lowerTime.getMonth()] + "-" + lowerTime.getDate() + " " + parsedHour[lowerTime.getHours()] + ":" + parsedMinSec[lowerTime.getMinutes()] + ":" + parsedMinSec[lowerTime.getSeconds()];
+			console.log(currentTime);
+			console.log(fiveMinBefore);
 			$.ajax({
-			    url: "/control/filterServlet.java",
+			    url: "/fyp_TheFourHorsemen_V1/filterServlet",
 			    data: {
-			        postVariableName: currentTime,
-			        postVariableName: fiveMinBefore
+			        "currentTime" : currentTime,
+			        "fiveMinBefore" : fiveMinBefore,
+			        "timelineMetrics" : metrics
 			    },
 			    type: 'POST'
 			});
