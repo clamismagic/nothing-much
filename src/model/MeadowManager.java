@@ -37,24 +37,19 @@ public class MeadowManager {
 			allHosts = hostGenSQL.hostname(fiveMinBefore, currentTime);
 			int degrees = 0, count = 0;
 			HashMap<String, int[]> posofhostoncanvas = new HashMap<String, int[]>();
-			for (String risk : checkboxes) {
-				System.out.println("Servlet: " + risk);
-			}
-			//String[] checkboxes = {"Periodic Start Process", "Unusual Host-Internal IP"}; // TODO
+			
 			for (String singlehostentry : allHosts) {
 				StringBuilder allvalues = new StringBuilder();
 				HashMap<String, String> riskfactorpos = new HashMap<String, String>(); //link riskname to risk value (petal)
 				Double avgRisk = 0.0;
-				//TODO execute query based on checkbox options (probably done below?)
+				// execute query based on checkbox options
 				for (int i = 0; i < checkboxes.length; i++) {
 					double risk = hostGenSQL.popRisk(checkboxes[i], singlehostentry);
-					System.out.println(risk);
 					avgRisk += risk;
 					String values = ""; // store coordinates for petal
 					values = HostGeneration.calcRiskFactor(risk, i);
 					riskfactorpos.put(checkboxes[i], values);
 					}
-				System.out.println(checkboxes.length);
 				// fill in missing petals with dummy coords for SVG generation
 				for (int i = 0; i < 5 - checkboxes.length; i++) {
 					riskfactorpos.put("dummy" + i, "10,10");
@@ -79,8 +74,6 @@ public class MeadowManager {
 					toPassXYcoords.add(singlehostentry + "=" + currenthostcords[0] + "," + currenthostcords[1]);
 					posofhostoncanvas.put(singlehostentry, currenthostcords);
 					allhostrisks.put(singlehostentry, allvalues.toString());
-					System.out.println("End of host " + singlehostentry);
-					System.out.println();
 				}
 			}
 			

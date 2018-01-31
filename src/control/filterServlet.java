@@ -41,9 +41,15 @@ public class filterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Get currentTime and fiveMinBefore
 		String currentTime = request.getParameter("currentTime");
+		System.out.println(currentTime);
 		String fiveMinBefore = request.getParameter("fiveMinBefore");
+		System.out.println(fiveMinBefore);
 		// Get selectedMetrics
 		String[] selectedMetrics = request.getParameterValues("metrics");
+		System.out.println(selectedMetrics);
+		String timelineMetrics = request.getParameter("timelineMetrics");
+		System.out.println(timelineMetrics);
+		System.out.println("debug");
 		// Declare manager
 		Meadow meadow = new Meadow();
 		MeadowManager meadowManager = new MeadowManager();
