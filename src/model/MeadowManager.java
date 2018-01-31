@@ -60,25 +60,9 @@ public class MeadowManager {
 					riskfactorpos.put("dummy" + i, "10,10");
 				}
 
-				int curIndex = 0;
 				for (Map.Entry<String, String> entry : riskfactorpos.entrySet()) {
-					switch(curIndex) {
-					case 0:
-					case 3:
-					case 5:
-					case 7:
-						allvalues.append(entry.getValue() + " ");
-					case 1:
-					case 4:
-					case 6:
-					case 8:
-						allvalues.append("10,10 ");
-						curIndex += 2;
-						break;
-					case 2:
-						allvalues.append(entry.getValue() + " ");
-						curIndex++;
-					}
+					allvalues.append(entry.getValue() + " ");
+					allvalues.append("10,10 ");
 				}
 				avgRisk /= checkboxes.length;
 				int distance = (int) Math.sqrt((((1 - avgRisk) / 2) * 800 * 400 / Math.PI)) + 20;
