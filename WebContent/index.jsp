@@ -143,13 +143,19 @@
 			var slider = document.getElementById("myRange");
 			var output = document.getElementById("demo");
 			
+			var selectedMetrics = [];
+			
+			
+			
 			var utcSeconds = Math.floor(slider.value / 1000);
-			var date = new Date(utcSeconds * 1000);
+			var currentTime = new Date(utcSeconds * 1000);
+			var fiveMinBefore = new Date((utcSeconds - 300) * 1000);
 			
 			$.ajax({
 			    url: "/control/filterServlet.java",
 			    data: {
-			        postVariableName: date
+			        postVariableName: currentTime,
+			        postVariableName: fiveMinBefore
 			    },
 			    type: 'POST'
 			});
