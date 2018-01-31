@@ -18,16 +18,6 @@ var ttposition;
 
 var svgPointsDefault = "10,0 10,10 20,10 0,10 10,10 4,18 10,10 16,18 10,10"; // Default coordinates, assuming all risks 1.0
 
-//coordinates for midpoint
-mainDiv.innerHTML += "<div id='centerpoint' width='10px' height='10px' z-index='1'>&nbsp;</div>";
-var centerpoint = document.getElementById("centerpoint");
-centerpoint.style.position = "absolute";
-centerpoint.style.top = "250px";
-centerpoint.style.left = "400px";
-centerpoint.style.borderRadius = "50%";
-centerpoint.style.color = "red";
-centerpoint.style.backgroundColor = "red";
-
 for (i = 0; i < hostnameArray.length; i++) {
 /*	if (coords[1] > 400) {
 		ttposition = "top";

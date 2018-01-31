@@ -28,3 +28,39 @@
 	tr:nth-child(even) {
 		background-color: #dddddd;
 	}
+	
+	#centerpoint {
+		position: absolute;
+		top: 250px;
+		left: 400px;
+	}
+	
+	#radius09 {
+		position: absolute;
+		top: 250px;
+		left: 400px;
+	}
+	
+	#radius08 {
+		position: absolute;
+		top: 250px;
+		left: 400px;
+	}
+	
+	#radius07 {
+		position: absolute;
+		top: 250px;
+		left: 400px;
+	}
+	
+	#radius05 {
+		position: absolute;
+		top: 250px;
+		left: 400px;
+	}
+	
+	#radius03 {
+		position: absolute;
+		top: 250px;
+		left: 400px;
+	}

@@ -112,7 +112,27 @@
 				Date date = new Date();
 			%>
 
-			<div class="col-md-9 align" id="main"></div>
+			<div class="col-md-9 align" id="main">
+				<div id="centerpoint">
+					<svg width="21" height="10"><circle cx="5" cy="5" r="4" stroke="black" stroke-width="0" fill="red" /></svg>
+				</div>
+				<div id ="radius09">
+					<svg height="500" width="500"><circle cx="210" cy="210" r="91" stroke="#ff0000" stroke-width="3" stroke-opacity="1" fill="red" fill-opacity="0"/></svg>
+				</div>
+				<div id ="radius08">
+					<svg height="500" width="500"><circle cx="210" cy="210" r="121" stroke="#ff4000" stroke-width="3" stroke-opacity="1" fill="red" fill-opacity="0"/></svg>
+				</div>
+				<div id ="radius07">
+					<svg height="500" width="500"><circle cx="210" cy="210" r="144" stroke="#ff8000" stroke-width="3" stroke-opacity="1" fill="red" fill-opacity="0"/></svg>
+				</div>
+				<div id ="radius05">
+					<svg height="500" width="500"><circle cx="210" cy="210" r="180" stroke="#ffbf00" stroke-width="3" stroke-opacity="1" fill="red" fill-opacity="0"/></svg>
+				</div>
+				<div id ="radius03">
+					<svg height="500" width="500"><circle cx="210" cy="210" r="209" stroke="#bfff00" stroke-width="3" stroke-opacity="1" fill="red" fill-opacity="0"/></svg>
+				</div>
+				<!-- https://www.w3schools.com/colors/colors_picker.asp -->
+			</div>
 			 <div id="missingHost"></div>
 			<div class="slidecontainer" bottom="5px" onmousedown="viewTime()" onmouseup="passtimestamp()">
 				<input type="range" min="<%=date.getTime() - 1514829136%>"
