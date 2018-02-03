@@ -44,7 +44,7 @@ public class MeadowManager {
 				Double avgRisk = 0.0;
 				// execute query based on checkbox options
 				for (int i = 0; i < checkboxes.length; i++) {
-					double risk = hostGenSQL.popRisk(checkboxes[i], singlehostentry);
+					double risk = hostGenSQL.popRisk(checkboxes[i], singlehostentry, fiveMinBefore, currentTime);
 					avgRisk += risk;
 					String values = ""; // store coordinates for petal
 					values = HostGeneration.calcRiskFactor(risk, i);

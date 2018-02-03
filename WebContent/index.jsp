@@ -101,10 +101,10 @@
 								meadow = (Meadow) request.getAttribute("meadow");
 							}
 							DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-							java.util.Date currentTime = new java.util.Date(); // use currentTime if risk factors are updated to current datetime
-							java.util.Date fiveMinBefore = new java.util.Date(System.currentTimeMillis() - 3600 * 1000);
+							java.util.Date maxTime = new java.util.Date(1478045100000L); // update maxTime according to relevant timestamp
+							java.util.Date fiveMinBefore = new java.util.Date(maxTime.getTime() - 3600 * 1000);
 						%>
-						<input type="hidden" name="currentTime" value="<%=df.format(currentTime)%>" /> <input type="hidden" name="fiveMinBefore" value="<%=df.format(fiveMinBefore)%>" />
+						<input type="hidden" name="currentTime" value="<%=df.format(maxTime)%>" /> <input type="hidden" name="fiveMinBefore" value="<%=df.format(fiveMinBefore)%>" />
 					</p>
 					<input type="submit" value="Filter" />
 				</form>
@@ -135,72 +135,28 @@
 		<div id ="radius03">
 			<svg height="500" width="500"><circle cx="210" cy="210" r="209" stroke="#bfff00" stroke-width="3" stroke-opacity="1" fill="red" fill-opacity="0"/></svg>
 		</div>
-		<!-- https://www.w3schools.com/colors/colors_picker.asp -->
-		
+		<div class="slidecontainer" bottom="5px" onmousedown="viewTime()" onmouseup="passtimestamp(<%=fiveMinBefore.getTime() - 86400000 %>, <%=maxTime.getTime() %>)">
+			<input type="range" min="<%=fiveMinBefore.getTime() - 86400000 %>" max="<%=maxTime.getTime() %>" value="<%=maxTime.getTime() %>" class="slider" id="myRange">
+			<p>
+				Value: <span id="demo">Now</span>
+			</p>
+		</div>
 	</div>
 	<div id="missingHost"></div>
-			<div class="slidecontainer" bottom="5px" onmousedown="viewTime()" onmouseup="passtimestamp()">
-				<input type="range" min="<%=date.getTime() - 1514829136%>" max="<%=date.getTime()%>" value="<%=date.getTime()%>" class="slider" id="myRange">
-				<p>
-					Value: <span id="demo">Now</span>
-				</p>
-			</div>
+			
 	
 	</div>
 </div>
-
-<script type="text/javascript">
-		var map = "<%=meadow.getAllHostRisks()%>"; 
-		var hostname = "<%=meadow.getAllHosts()%>";
-		var hostpos = "<%=meadow.getToPassXYcoords()%>";
-	</script>
-	<!--  Slider script -->
-	<script>
-		function passtimestamp() {
-			var slider = document.getElementById("myRange");
-			var output = document.getElementById("demo");
-			
-			var metrics = [];
-			$("input:checkbox[name=metrics]:checked").each(function(){
-			    metrics.push($(this).val());
-			});
-			
-			console.log(metrics);
-			
-			var utcSeconds = Math.floor(slider.value / 1000);
-			var timeNow = new Date(utcSeconds * 1000);
-			var parsedMonth = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-			var parsedHour = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
-			var parsedMinSec = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
-			var currentTime = timeNow.getFullYear() + "-" + parsedMonth[timeNow.getMonth()] + "-" + timeNow.getDate() + " " + parsedHour[timeNow.getHours()] + ":" + parsedMinSec[timeNow.getMinutes()] + ":" + parsedMinSec[timeNow.getSeconds()];
-			var lowerTime = new Date((utcSeconds - 300) * 1000);
-			var fiveMinBefore = lowerTime.getFullYear() + "-" + parsedMonth[lowerTime.getMonth()] + "-" + lowerTime.getDate() + " " + parsedHour[lowerTime.getHours()] + ":" + parsedMinSec[lowerTime.getMinutes()] + ":" + parsedMinSec[lowerTime.getSeconds()];
-			console.log(currentTime);
-			console.log(fiveMinBefore);
-			$.ajax({
-			    url: "/fyp_TheFourHorsemen_V1/filterServlet",
-			    data: {
-			        "currentTime" : currentTime,
-			        "fiveMinBefore" : fiveMinBefore,
-			        "timelineMetrics" : metrics
-			    },
-			    type: 'POST'
-			});
-		}
-		
-		function viewTime() {
-			var slider = document.getElementById("myRange");
-			var output = document.getElementById("demo");
-			
-			slider.oninput = function() {
-				var utcSeconds = Math.floor(slider.value / 1000);
-				var date = new Date(utcSeconds * 1000);
-				output.innerHTML = date;
-			}
-		}
-	</script>
 	<script type="text/javascript" src="js/test-edit.js"></script>
-
+	<%
+		if (meadow.getAllHosts() != null) {
+	%>
+	<script type="text/javascript">
+			populateMainDiv("<%=meadow.getAllHosts()%>", "<%=meadow.getAllHostRisks()%>", "<%=meadow.getToPassXYcoords()%>");
+	</script>
+	<%
+		}
+	%>
 <footer class="container-fluid text-center footer navbar-fixed-bottom">
 	<p>&copy; Singapore Polytechnic AY17/18 FYP Group 63 | DSO National Laboratories</p>
 </footer>

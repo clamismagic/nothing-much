@@ -36,8 +36,8 @@ public class HostGenSQL {
 		int count = 0;
 		try {
 			PreparedStatement pstmt = conn.prepareStatement("select distinct hostname from riskoutput where timestamp between ? and ? order by riskfactor desc");
-			pstmt.setString(1, "2016-11-01 00:00:00");
-			pstmt.setString(2, "2016-11-01 00:05:00");
+			pstmt.setString(1, startTime);
+			pstmt.setString(2, endTime);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -52,16 +52,12 @@ public class HostGenSQL {
 		return allHosts;
 		
 	}   
-	public Double popRisk(String riskname, String singlehostentry) throws SQLException {
+	public Double popRisk(String riskname, String singlehostentry, String startTime, String endTime) throws SQLException {
 			PreparedStatement pstmt = riskcheckbyhostandrisk();
 			pstmt.setString(1, singlehostentry);
 			pstmt.setString(2, riskname);
-			/*
-			 * pstmt.setString(3, df.format(fiveMinBefore)); pstmt.setString(4,
-			 * df.format(currentTime));
-			 */
-			pstmt.setString(3, "2016-11-01 00:00:00");
-			pstmt.setString(4, "2016-11-01 00:05:00");
+			pstmt.setString(3, startTime);
+			pstmt.setString(4, endTime);
 			ResultSet rsRiskFactor = pstmt.executeQuery();
 			
 			if (rsRiskFactor.next()) { // only take the latest result in the table

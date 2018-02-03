@@ -1,5 +1,7 @@
 package control;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -41,15 +43,14 @@ public class filterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Get currentTime and fiveMinBefore
 		String currentTime = request.getParameter("currentTime");
-		System.out.println(currentTime);
 		String fiveMinBefore = request.getParameter("fiveMinBefore");
-		System.out.println(fiveMinBefore);
 		// Get selectedMetrics
 		String[] selectedMetrics = request.getParameterValues("metrics");
-		System.out.println(selectedMetrics);
 		String timelineMetrics = request.getParameter("timelineMetrics");
-		System.out.println(timelineMetrics);
-		System.out.println("debug");
+		if (timelineMetrics != null && selectedMetrics == null) {
+			System.out.println(timelineMetrics);
+			selectedMetrics = timelineMetrics.split(",");
+		}
 		// Declare manager
 		Meadow meadow = new Meadow();
 		MeadowManager meadowManager = new MeadowManager();
@@ -62,8 +63,18 @@ public class filterServlet extends HttpServlet {
 			response.sendRedirect("index.jsp?status=error");
 			return;
 		} else {
-			request.setAttribute("meadow", meadow);
-			request.getRequestDispatcher("index.jsp?status=working").forward(request, response);
+			if (timelineMetrics != null) {
+				// request originates from ajax, parse meadow object to JSON and forward back to AJAX
+				Gson gson = new Gson();
+				String jsonMeadow = gson.toJson(meadow);
+				System.out.println(jsonMeadow);
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(jsonMeadow);
+			} else {
+				request.setAttribute("meadow", meadow);
+				request.getRequestDispatcher("index.jsp?status=working").forward(request, response);
+			}
 		}
 	}	
 
