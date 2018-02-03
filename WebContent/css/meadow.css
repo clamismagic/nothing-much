@@ -1,0 +1,71 @@
+/* Set gray background color and 100% height */
+.sidenav {
+  padding-top: 0px;
+  background-color: #f1f1f1;
+  height: 150%;/* Bug @ 100% height */
+}
+#METRICS-HEADER {
+	font-weight: bold;
+	text-decoration: underline overline;
+}
+label:hover {/* Minor fix */
+	cursor: default;
+}
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: auto;
+	cellspacing: 0;
+	cellpadding: 0;
+}
+
+td, th {
+	border: none;
+	text-align: center;
+	width: auto;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+
+.slidecontainer {
+	position: relative;
+	top: 500px;
+}
+
+#centerpoint {
+	position: absolute;
+	top: 250px;
+	left: 605px;
+}
+
+#radius09 {
+	position: absolute;
+	top: 50px;
+	left: 400px;
+}
+
+#radius08 {
+	position: absolute;
+	top: 50px;
+	left: 400px;
+}
+
+#radius07 {
+	position: absolute;
+	top: 50px;
+	left: 400px;
+}
+
+#radius05 {
+	position: absolute;
+	top: 50px;
+	left: 400px;
+}
+
+#radius03 {
+	position: absolute;
+	top: 50px;
+	left: 400px;
+}
