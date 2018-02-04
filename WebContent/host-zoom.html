@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Host Zoom</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" href="bootstrap.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/base.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- CSS Files -->
+    <link type="text/css" href="host-zoom-dumps/base.css" rel="stylesheet" />
+    <link type="text/css" href="host-zoom-dumps/BarChart.css" rel="stylesheet" />
+
+    <!--[if IE]><script language="javascript" type="text/javascript" src="../../Extras/excanvas.js"></script><![endif]-->
+
+    <!-- JIT Library File -->
+    <script language="javascript" type="text/javascript" src="host-zoom-dumps/jit-yc.js"></script>
+
+    <!-- Example File -->
+    <script language="javascript" type="text/javascript" src="host-zoom-dumps/example1.js"></script>
+</head>
+
+<body onload="init();">
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>						
+			</button>
+                <a class="logo" href="#"><img src="img/noun_1324981_cc1.png" alt="Logo"></a>|||
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="meadow.jsp">Meadow</a></li>
+                    <li><a href="query.jsp">Query</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Guide</a></li>
+                    <li><a href="credits.html">Credits & Acknowledgements</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid text-center">
+        <hr>
+        <div class="row content">
+            <div class="col-sm-8 text-left col-md-offset-2">
+
+                <div id="container">
+
+                    <div id="left-container">
+
+
+
+                        <div class="text">
+                            <h4>
+                                Host Details
+                            </h4>
+
+                            <p>IP address:</p>
+                            <p>MAC address:</p>
+
+                        </div>
+                        <ul id="id-list"></ul>
+                        <a id="update" href="#" class="theme button white">Update Data</a>
+
+
+                        <!--<div style="text-align:center;"><a href="example1.code.html">See the Example Code</a></div>-->
+                    </div>
+
+                    <div id="center-container">
+                        <div id="infovis"></div>
+
+                        <canvas id="Canvas" width="800" height="200">Your browser does not support the HTML5 canvas tag.</canvas>
+
+                        <script language="javascript" type="text/javascript" src="host-zoom-dumps/freq.js"></script>
+
+                    </div>
+
+                    <div id="right-container">
+
+                        <div id="inner-details"></div>
+
+                    </div>
+
+                    <div id="log"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="container-fluid text-center footer navbar-fixed-bottom">
+        <p>&copy; Singapore Polytechnic AY17/18 FYP Group 63 | DSO National Laboratories</p>
+    </footer>
+
+</body>
+
+</html>
