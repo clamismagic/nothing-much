@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Host Zoom</title>
+    <title>Host Zoom - Laminae</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="bootstrap.css">-->
@@ -22,6 +22,12 @@
 
     <!-- Example File -->
     <script language="javascript" type="text/javascript" src="host-zoom-dumps/example1.js"></script>
+    
+    <script>
+    	$(function () {
+    		$(".footer").load("footer.html");
+    	})
+    </script>
 </head>
 
 <body onload="init();">
@@ -101,10 +107,7 @@
         </div>
     </div>
 
-    <footer class="container-fluid text-center footer navbar-fixed-bottom">
-        <p>&copy; Singapore Polytechnic AY17/18 FYP Group 63 | DSO National Laboratories</p>
-    </footer>
-
+    <div class="footer"></div>
 </body>
 
 </html>

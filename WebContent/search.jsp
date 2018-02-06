@@ -6,7 +6,7 @@
 <%@ page import="model.QueryData"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
-<title>Search the field - The Four Horsemen</title>
+<title>Query - Laminae</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--<link rel="stylesheet" href="bootstrap.css">-->
@@ -169,8 +169,8 @@
 							</tr>
 							<tr class="toAppend">
 								<td>CONDITION:</td>
-								<td><input type="text" name="condition[]" class="condition" id="condition0"
-									placeholder="Condition" /></td>
+								<td><input type="text" name="condition[]" class="condition"
+									id="condition0" placeholder="Condition" /></td>
 							</tr>
 							<tr>
 								<td>
@@ -209,25 +209,24 @@
 					<strong>FROM</strong> <span id="table"><%=table[i].toUpperCase()%></span>
 					<%
 						if (condition[i] != "") {
-							for (int j = 0; j < condition.length; j++) {
-								if (j == 0) {
-									
+										for (int j = 0; j < condition.length; j++) {
+											if (j == 0) {
 					%>
 					<strong>WHERE</strong>
 					<%=condition[j].toUpperCase()%>
 					<%
-								} else {
+						} else {
 					%>
 					<strong>AND</strong>
-					<%=condition[j].toUpperCase() %>
+					<%=condition[j].toUpperCase()%>
 					<%
-								}
-							}
 						}
+										}
+									}
 					%>
 				</p>
-				<button class="searchFormBtn" onclick="exportTableToCSV('logs.csv')">Export to
-					CSV</button>
+				<button class="searchFormBtn" onclick="exportTableToCSV('logs.csv')">Export
+					to CSV</button>
 				<table class="searchQuery">
 					<tr id="searchResultHeader">
 						<%
@@ -264,10 +263,13 @@
 						}
 					} else if (filterStatus != null && filterStatus.equals("noData")) {
 				%>
-				<p id="noData">We are unable to find anything that suits your query. Please check your conditions and try again.<br />If you think this
-					is a mistake, please contact your system administrator.</p>
+				<p id="noData">
+					We are unable to find anything that suits your query. Please check
+					your conditions and try again.<br />If you think this is a
+					mistake, please contact your system administrator.
+				</p>
 				<%
-						String[] table = request.getParameterValues("table[]");
+					String[] table = request.getParameterValues("table[]");
 						String[] column = request.getParameterValues("column[]");
 						String[] condition = request.getParameterValues("condition[]");
 						int noOfQueriedItems = (Integer) request.getAttribute("noOfQueriedItems");
@@ -282,23 +284,22 @@
 					<strong>FROM</strong> <span id="table"><%=table[i].toUpperCase()%></span>
 					<%
 						if (condition[i] != "") {
-							for (int j = 0; j < condition.length; j++) {
-								if (j == 0) {
-									
+										for (int j = 0; j < condition.length; j++) {
+											if (j == 0) {
 					%>
 					<strong>WHERE</strong>
 					<%=condition[j].toUpperCase()%>
 					<%
-								} else {
+						} else {
 					%>
 					<strong>AND</strong>
 					<%=condition[j].toUpperCase()%>
 					<%
+						}
+										}
+									}
 								}
 							}
-						}
-							}
-						}
 					%>
 				</p>
 				<%
@@ -308,11 +309,8 @@
 		</div>
 	</div>
 
-	<footer class="container-fluid text-center footer navbar-fixed-bottom">
-	<p>Copyright &copy; 2017-2018 by The Four Horsemen, Singapore Polytechnic AY17/18 FYP Group 63 | DSO National
-		Laboratories. All Rights Reserved.</p>
-	</footer>
-
+	<jsp:include page="footer.html"></jsp:include>
+	
 </body>
 
 </html>

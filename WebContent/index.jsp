@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Meadow Diagram</title>
+	<title>Meadow Diagram - Laminae</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--<link rel="stylesheet" href="bootstrap.css">-->
@@ -156,9 +156,7 @@
 	<%
 		}
 	%>
-<footer class="container-fluid text-center footer navbar-fixed-bottom">
-	<p>&copy; Singapore Polytechnic AY17/18 FYP Group 63 | DSO National Laboratories</p>
-</footer>
+<jsp:include page="footer.html"></jsp:include>
 
 </body>
 </html>

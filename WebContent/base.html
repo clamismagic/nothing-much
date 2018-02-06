@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="css/base.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+    	$(function () {
+    		$(".footer").load("footer.html");
+    	})
+    </script>
 </head>
 
 <body>
@@ -22,7 +27,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>						
 			</button>
-                <a class="logo" href="#"><img src="images/logo_main.png" alt="Logo"></a>|||
+                <a class="logo" href="index.html"><img src="images/logo_main.png" alt="Logo"></a>|||
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
@@ -58,9 +63,7 @@
         </div>
     </div>
 
-    <footer class="container-fluid text-center footer navbar-fixed-bottom">
-        <p>&copy; Singapore Polytechnic AY17/18 FYP Group 63 | DSO National Laboratories</p>
-    </footer>
+    <div class="footer"></div>
 
 </body>
 

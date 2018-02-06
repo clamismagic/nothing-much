@@ -6,7 +6,7 @@
 <%@ page import="model.QueryData"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head>
-<title>Error - The Four Horsemen</title>
+<title>Error - Laminae</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--<link rel="stylesheet" href="bootstrap.css">-->
@@ -65,10 +65,7 @@
 		</div>
 	</div>
 
-	<footer class="container-fluid text-center footer navbar-fixed-bottom">
-	<p>Copyright &copy; 2017-2018 by The Four Horsemen, Singapore Polytechnic AY17/18 FYP Group 63 | DSO National
-		Laboratories. All Rights Reserved.</p>
-	</footer>
+	<jsp:include page="footer.html"></jsp:include>
 
 </body>
 
