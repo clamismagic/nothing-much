@@ -33,7 +33,7 @@ public class filterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("meadow.jsp");
 	
 	}
 
@@ -57,10 +57,10 @@ public class filterServlet extends HttpServlet {
 		meadow = meadowManager.genHost(request, fiveMinBefore, currentTime, selectedMetrics);
 		// Validation for selectedMetrics
 		if (selectedMetrics == null) {
-			response.sendRedirect("index.jsp?status=error2");
+			request.getRequestDispatcher("meadow.jsp?status=error2").forward(request, response);
 			return;
 		} else if (selectedMetrics.length > 5) {
-			response.sendRedirect("index.jsp?status=error");
+			request.getRequestDispatcher("meadow.jsp?status=error").forward(request, response);
 			return;
 		} else {
 			if (timelineMetrics != null) {
@@ -73,7 +73,7 @@ public class filterServlet extends HttpServlet {
 				response.getWriter().write(jsonMeadow);
 			} else {
 				request.setAttribute("meadow", meadow);
-				request.getRequestDispatcher("index.jsp?status=working").forward(request, response);
+				request.getRequestDispatcher("meadow.jsp?status=working").forward(request, response);
 			}
 		}
 	}	

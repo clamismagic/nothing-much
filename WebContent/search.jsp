@@ -5,24 +5,19 @@
 <%@ page import="model.QueryDataManager"%>
 <%@ page import="model.QueryData"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-
 <title>Search the field - The Four Horsemen</title>
-
-<!-- Bootstrap core CSS -->
-<link rel="stylesheet" type="text/css"
-	href="css/bootstrap/bootstrap.min.css" />
-
-<!-- Custom styles for this template -->
-<link rel="stylesheet" href="css/simple-sidebar.css" />
-
-<!-- jQuery for form update -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--<link rel="stylesheet" href="bootstrap.css">-->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/base.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Javascript / JQuery / Custom Javascript / Custom JQuery -->
 <script src="http://code.jquery.com/jquery-1.11.1.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
@@ -46,38 +41,81 @@
 	}
 	$(document).ready(
 			function() {
-				var regex = /^(.+?)(\d+)$/i;
-				var cloneIndex = $(".searchForm").length;
-
 				$('.search').on('click', 'button.add-more', clone);
-
+				
 				function clone() {
-					$(this).parents(".searchForm").clone().appendTo(".search")
-							.attr("id", "searchForm" + cloneIndex).find("*")
-							.each(function() {
-								var id = this.id || "";
-								var match = id.match(regex) || [];
-								if (match.length == 3) {
-									this.id = match[1] + (cloneIndex);
-								}
-							})
-					cloneIndex++;
+					$(".toAppend").clone().removeClass("toAppend").insertAfter(".toAppend")
 				}
+				
 			});
 </script>
+<script>
+	function downloadCSV(csv, filename) {
+		var csvFile;
+		var downloadLink;
+
+		csvFile = new Blob([ csv ], {
+			type : "text/csv"
+		});
+		downloadLink = document.createElement("a");
+		downloadLink.download = filename;
+		downloadLink.href = window.URL.createObjectURL(csvFile);
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+		downloadLink.click();
+	}
+	function exportTableToCSV(filename) {
+		var csv = [];
+		var rows = document.querySelectorAll("table tr");
+
+		for (var i = 0; i < rows.length; i++) {
+			var row = [], cols = rows[i].querySelectorAll("td");
+
+			for (var j = 0; j < cols.length; j++) {
+				row.push(cols[j].innerText);
+			}
+
+			csv.push(row.join(","));
+		}
+
+		downloadCSV(csv.join("\n"), filename);
+	}
+</script>
 </head>
+
 <body>
 
-	<div id="wrapper">
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="logo" href="index.html"><img src="images/logo_navbar.png"
+				alt="Logo"></a>|||
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="meadow.jsp">Meadow</a></li>
+				<li class="active"><a href="search.jsp">Query</a></li>
+				<li><a href="#">Contact</a></li>
+				<li><a href="#">Guide</a></li>
+				<li><a href="credits.html">Credits & Acknowledgements</a></li>
+			</ul>
+			<!-- <ul class="nav navbar-nav navbar-right">
+				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+						Login</a></li>
+			</ul> -->
+		</div>
+	</div>
+	</nav>
 
-		<!-- Sidebar -->
-		<jsp:include page="sidebar.html"></jsp:include>
-		<!-- /#sidebar-wrapper -->
-
-		<!-- Page Content -->
-		<div id="page-content-wrapper">
-			<jsp:include page="header.html"></jsp:include>
-			<div class="col-md-12">
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div class="col-md-12 sidenav">
 				<h1>Find something</h1>
 				<%
 					String filterStatus = request.getParameter("status");
@@ -129,15 +167,15 @@
 									</div>
 								</td>
 							</tr>
-							<tr>
+							<tr class="toAppend">
 								<td>CONDITION:</td>
-								<td><input type="text" name="condition[]" id="condition"
+								<td><input type="text" name="condition[]" class="condition" id="condition0"
 									placeholder="Condition" /></td>
 							</tr>
 							<tr>
 								<td>
 									<button class="searchFormBtn add-more" type="button"
-										onclick=<%statementCount++;%>>Add</button>
+										onclick=<%statementCount++;%>>Add Condition</button>
 								</td>
 							</tr>
 						</table>
@@ -167,27 +205,37 @@
 				%>
 				<p>
 					Query: <strong>SELECT</strong>
-					<%=column[i]%>
-					<strong>FROM</strong>
-					<%=table[i]%>
+					<%=column[i].toUpperCase()%>
+					<strong>FROM</strong> <span id="table"><%=table[i].toUpperCase()%></span>
 					<%
 						if (condition[i] != "") {
+							for (int j = 0; j < condition.length; j++) {
+								if (j == 0) {
+									
 					%>
 					<strong>WHERE</strong>
-					<%=condition[i]%>
+					<%=condition[j].toUpperCase()%>
 					<%
+								} else {
+					%>
+					<strong>AND</strong>
+					<%=condition[j].toUpperCase() %>
+					<%
+								}
+							}
 						}
 					%>
 				</p>
+				<button class="searchFormBtn" onclick="exportTableToCSV('logs.csv')">Export to
+					CSV</button>
 				<table class="searchQuery">
 					<tr id="searchResultHeader">
 						<%
 							for (int j = 0; j < queryData.getColumnName().size(); j++) {
 						%>
-						<td><%=queryData.getColumnName().get(j).toUpperCase()%>
-						<%
- 							}
-						 %></td>
+						<td><%=queryData.getColumnName().get(j).toUpperCase()%> <%
+ 	}
+ %></td>
 					</tr>
 					<%
 						int x = 0;
@@ -216,30 +264,55 @@
 						}
 					} else if (filterStatus != null && filterStatus.equals("noData")) {
 				%>
-				<p id="noData">We are unable to find anything. If you think this is a mistake, please contact your system administrator.</p>
+				<p id="noData">We are unable to find anything that suits your query. Please check your conditions and try again.<br />If you think this
+					is a mistake, please contact your system administrator.</p>
+				<%
+						String[] table = request.getParameterValues("table[]");
+						String[] column = request.getParameterValues("column[]");
+						String[] condition = request.getParameterValues("condition[]");
+						int noOfQueriedItems = (Integer) request.getAttribute("noOfQueriedItems");
+						if (noOfQueriedItems == 0) {
+						} else {
+							for (int i = 0; i < noOfQueriedItems; i++) {
+								QueryData queryData = (QueryData) request.getAttribute("queryData" + i);
+				%>
+				<p>
+					Your Query: <strong>SELECT</strong>
+					<%=column[i].toUpperCase()%>
+					<strong>FROM</strong> <span id="table"><%=table[i].toUpperCase()%></span>
+					<%
+						if (condition[i] != "") {
+							for (int j = 0; j < condition.length; j++) {
+								if (j == 0) {
+									
+					%>
+					<strong>WHERE</strong>
+					<%=condition[j].toUpperCase()%>
+					<%
+								} else {
+					%>
+					<strong>AND</strong>
+					<%=condition[j].toUpperCase()%>
+					<%
+								}
+							}
+						}
+							}
+						}
+					%>
+				</p>
 				<%
 					}
 				%>
 			</div>
 		</div>
-		<!-- /#page-content-wrapper -->
-
-		<!-- Footer -->
-		<jsp:include page="footer.html"></jsp:include>
-
 	</div>
-	<!-- /#wrapper -->
 
-	<!-- Bootstrap core JavaScript -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+	<footer class="container-fluid text-center footer navbar-fixed-bottom">
+	<p>Copyright &copy; 2017-2018 by The Four Horsemen, Singapore Polytechnic AY17/18 FYP Group 63 | DSO National
+		Laboratories. All Rights Reserved.</p>
+	</footer>
 
-	<!-- Menu Toggle Script -->
-	<script>
-		$("#menu-toggle").click(function(e) {
-			e.preventDefault();
-			$("#wrapper").toggleClass("toggled");
-		});
-	</script>
 </body>
+
 </html>

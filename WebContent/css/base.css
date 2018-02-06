@@ -37,6 +37,314 @@ footer p {
 	
 }
 
+/* Custom CSS */
+.align {
+	float: left;
+}
+
+#copyright {
+	text-align: center;
+}
+
+#errortitle {
+    text-align: center;
+    font-size: 20em;
+    color: red;
+    line-height: 2em;
+}
+
+.errorcontent {
+    text-align: justify;
+    font-size: 2em;
+    line-height: 1.5em;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#errorthankyou {
+    text-align: center;
+}
+
+#importantNote {
+	color: red;
+	font-size: 13px;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.metric-border {
+	border-right: 1px solid rgba(0,0,0,0.1);
+}
+
+#noData {
+	text-transform: uppercase;
+	font-weight: bolder;
+	font-size: 20px;
+}
+
+.logoSidebar {
+	max-width: 220px;
+	align-self: center;
+	height: auto;
+}
+
+.menuAlign {
+	margin-top: 25px;
+	position: absolute;
+}
+
+.errorMessage {
+	color: red;
+	text-transform: uppercase;
+	font-weight: bolder;
+}
+
+.searchQuery {
+	border: solid 1px black;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+
+.searchQuery tr, .searchQuery td {
+	border: solid 1px black;
+	padding: 5px;
+}
+
+#searchResultHeader {
+	background-color: #ccc;
+	font-weight: bold;
+}
+
+.condition {
+	width: 500px;
+	border-radius: 15px;
+	/*background: #2c3e50;*/
+	padding: 0 10px;
+	-moz-transition: all 0.5s ease;
+  	-ms-transition: all 0.5s ease;
+  	-o-transition: all 0.5s ease;
+  	transition: all 0.5s ease;
+  	/*color: #fff;*/
+}
+
+/*#condition::-webkit-input-placeholder {
+	color: #fff;
+	-moz-transition: all 0.5s ease;
+  	-ms-transition: all 0.5s ease;
+  	-o-transition: all 0.5s ease;
+  	transition: all 0.5s ease;
+}
+ 
+#condition:-moz-placeholder { /* Firefox 18- *//*
+	color: #fff;  
+	-moz-transition: all 0.5s ease;
+  	-ms-transition: all 0.5s ease;
+  	-o-transition: all 0.5s ease;
+  	transition: all 0.5s ease;
+}
+ 
+#condition::-moz-placeholder {  /* Firefox 19+ *//*
+	color: #fff;
+	-moz-transition: all 0.5s ease;
+  	-ms-transition: all 0.5s ease;
+  	-o-transition: all 0.5s ease;
+  	transition: all 0.5s ease;
+}
+ 
+#condition:-ms-input-placeholder {  
+	color: #fff;
+	-moz-transition: all 0.5s ease;
+  	-ms-transition: all 0.5s ease;
+  	-o-transition: all 0.5s ease;
+  	transition: all 0.5s ease;
+}
+
+#condition:hover::-webkit-input-placeholder {
+	color: #f39c12;
+}
+ 
+#condition:hover:-moz-placeholder { /* Firefox 18- *//*
+	color: #f39c12;  
+}
+ 
+#condition:hover::-moz-placeholder {  /* Firefox 19+ *//*
+	color: #f39c12;  
+}
+ 
+#condition:hover:-ms-input-placeholder {  
+	color: #f39c12;  
+}*/
+
+.searchForm tr, .searchForm td {
+	padding: 5px;
+}
+
+.searchForm {
+	margin-left: auto;
+	margin-right: auto;
+}/*
+
+#condition:hover, .condition:focus {
+	background-color: #fff;
+  	color: #f39c12;
+}*/
+
+/* Custom Select */
+.searchDropdown {
+  position: relative;
+  display: block;
+  width: 500px;
+  /*background: #2c3e50;*/
+  overflow: hidden;
+  border-radius: 15px;
+}
+.searchDropdown select {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  /*color: #fff;*/
+  cursor: pointer;
+  padding: 0 10px;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  /*background: #2c3e50;
+  background-image: none;*/
+}
+.searchDropdown select::-ms-expand {
+  display: none;
+}
+
+.searchDropdown select:hover {
+	/*background-color: #fff;
+  	color: #f39c12;*/
+}
+
+/* Arrow */
+.searchDropdown::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 1em;
+  /*background: #34495e;*/
+  pointer-events: none;
+}
+
+/* Transition */
+.searchDropdown:hover::after {
+	/*background-color: #fff;
+  	color: #f39c12;*/
+}
+.searchDropdown::after {
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#submitQuery {
+  -moz-border-radius: 15px;
+  /*-moz-box-shadow: #7ef8fe 0px 0px 48px;*/
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-border-radius: 25px;
+  /*-webkit-box-shadow: #7ef8fe 0 0 10px;*/
+  -webkit-transition: all 0.5s ease;
+  /*background-color: #2c3e50;*/
+  border-radius: 15px;
+  /*border: 1px solid #7ef8fe;*/
+  /*box-shadow: #7ef8fe 0px 0px 48px;*/
+  /*color: #ffffff;*/
+  display: inline-block;
+  margin: auto;
+  padding: 5px;
+  text-decoration: none;
+  transition: all 0.5s ease;
+}
+
+#submitQuery:hover {
+  background-color: #000000;
+  color: #9d9d9d;
+  padding: 5px;
+  cursor: pointer
+}
+
+.menuBtn {
+	-moz-border-radius: 15px;
+  /*-moz-box-shadow: #7ef8fe 0px 0px 48px;*/
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-border-radius: 25px;
+  /*-webkit-box-shadow: #7ef8fe 0 0 10px;*/
+  -webkit-transition: all 0.5s ease;
+  /*background-color: #2c3e50;*/
+  border-radius: 15px;
+  /*border: 1px solid #7ef8fe;
+  box-shadow: #7ef8fe 0px 0px 48px;
+  color: #ffffff;*/
+  display: inline-block;
+  margin: auto;
+  padding: 10px;
+  text-decoration: none;
+  transition: all 0.5s ease;
+}
+
+.menuBtn:hover {
+  background-color: #000000;
+  color: #9d9d9d;
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.searchFormBtn {
+	-moz-border-radius: 15px;
+  /*-moz-box-shadow: #7ef8fe 0px 0px 48px;*/
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-border-radius: 25px;
+  /*-webkit-box-shadow: #7ef8fe 0 0 10px;*/
+  -webkit-transition: all 0.5s ease;
+  /*background-color: #2c3e50;*/
+  border-radius: 15px;
+  /*border: 1px solid #7ef8fe;
+  box-shadow: #7ef8fe 0px 0px 48px;
+  color: #ffffff;*/
+  display: inline-block;
+  margin: 5px auto;
+  padding: 5px;
+  text-decoration: none;
+  transition: all 0.5s ease;
+}
+
+.searchFormBtn:hover {
+  background-color: #000000;
+  color: #9d9d9d;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.hide {
+	display: none;
+}
+
+/* End of Custom CSS */
+
 /* On small screens, set height to 'auto' for sidenav and grid */
 @media screen and (max-width: 767px) {
 	.sidenav {
@@ -48,7 +356,7 @@ footer p {
 	
 .logo img {
 	width: 100% \9; /*Force IE10 and below to size SVG images correctly*/
-	max-width: 100%;
+	max-height: 50px;
 }
 
 @media (max-width:480px) { 
