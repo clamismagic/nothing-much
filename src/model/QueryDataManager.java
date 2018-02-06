@@ -62,6 +62,7 @@ public class QueryDataManager {
 	}
 
 	public QueryData getData(String column, String table) {
+		int counter = 1;
 		QueryData queryData = new QueryData();
 		ArrayList<String> columnName = new ArrayList<String>();
 		ArrayList<String> columnData = new ArrayList<String>();
@@ -83,6 +84,10 @@ public class QueryDataManager {
 				for (int i = 0; i < columnName.size(); i++) {
 					columnData.add(selectDataRs.getObject(columnName.get(i)).toString());
 				}
+				if (counter >= 50) {
+					break;
+				}
+				counter++;
 			}
 			queryData.setColumnName(columnName);
 			queryData.setColumnData(columnData);
@@ -93,7 +98,8 @@ public class QueryDataManager {
 		}
 	}
 
-	public QueryData getData(String column, String table, String condition) {
+	public QueryData getData(String column, String table, String[] condition) {
+		int counter = 1;
 		QueryData queryData = new QueryData();
 		ArrayList<String> columnName = new ArrayList<String>();
 		ArrayList<String> columnData = new ArrayList<String>();
@@ -109,13 +115,24 @@ public class QueryDataManager {
 			while (metaDataRs.next()) {
 				columnName.add(metaDataRs.getString("COLUMN_NAME"));
 			}
-			String selectDataSQL = "SELECT " + column + " FROM " + table + " WHERE " + condition;
+			String selectDataSQL = "SELECT " + column + " FROM " + table + " WHERE ";
+			for (int i = 0; i < condition.length; i++) {
+				if (i == 0) {
+					selectDataSQL += condition[i];
+				} else {
+					selectDataSQL += " AND " + condition[i];
+				}
+			}
 			PreparedStatement selectDataPstmt = conn.prepareStatement(selectDataSQL);
 			ResultSet selectDataRs = selectDataPstmt.executeQuery();
 			while (selectDataRs.next()) {
 				for (int i = 0; i < columnName.size(); i++) {
 					columnData.add(selectDataRs.getObject(columnName.get(i)).toString());
 				}
+				if (counter >= 50) {
+					break;
+				}
+				counter++;
 			}
 			queryData.setColumnName(columnName);
 			queryData.setColumnData(columnData);

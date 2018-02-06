@@ -69,37 +69,46 @@ public class searchServlet extends HttpServlet {
 		String[] condition = request.getParameterValues("condition[]");
 		QueryDataManager queryDataManager = new QueryDataManager(request);
 		if (column == null || table == null) {
-			response.sendRedirect("search.jsp?status=error2");
+			request.getRequestDispatcher("search.jsp?status=error2").forward(request, response);
 			return;
 		} else {
 			int i;
 			for (i = 0; i < column.length; i++) {
-				if (column[i] != "" && table[i] != "" && column[i] != null && table[i] != null && !column[i].toLowerCase().trim().equals("---select table first---") && !table[i].toLowerCase().trim().equals("---select table---")) {
+				if (column[i] != "" && table[i] != "" && column[i] != null && table[i] != null
+						&& !column[i].toLowerCase().trim().equals("---select table first---")
+						&& !table[i].toLowerCase().trim().equals("---select table---")) {
 					QueryData queryData = new QueryData();
 					if (condition[i] == "") {
 						queryData = queryDataManager.getData(column[i], table[i]);
 						if (queryData != null) {
 							if (queryData.getColumnData().size() != 0) {
-							request.setAttribute("queryData" + i, queryData);
+								request.setAttribute("queryData" + i, queryData);
 							} else {
-								response.sendRedirect("search.jsp?status=noData");
+								request.setAttribute("noOfQueriedItems", column.length);
+								request.getRequestDispatcher("search.jsp?status=noData").forward(request, response);
 								return;
 							}
 						} else {
-							response.sendRedirect("search.jsp?status=error");
+							request.getRequestDispatcher("search.jsp?status=error").forward(request, response);
 							return;
 						}
 					} else {
-						queryData = queryDataManager.getData(column[i], table[i], condition[i]);
+						queryData = queryDataManager.getData(column[i], table[i], condition);
 						if (queryData != null) {
-							request.setAttribute("queryData" + i, queryData);
+							if (queryData.getColumnData().size() != 0) {
+								request.setAttribute("queryData" + i, queryData);
+							} else {
+								request.setAttribute("noOfQueriedItems", column.length);
+								request.getRequestDispatcher("search.jsp?status=noData").forward(request, response);
+								return;
+							}
 						} else {
-							response.sendRedirect("search.jsp?status=error");
+							request.getRequestDispatcher("search.jsp?status=error").forward(request, response);
 							return;
 						}
 					}
 				} else {
-					response.sendRedirect("search.jsp?status=error2");
+					request.getRequestDispatcher("search.jsp?status=error2").forward(request, response);
 					return;
 				}
 			}
