@@ -233,8 +233,8 @@
 							for (int j = 0; j < queryData.getColumnName().size(); j++) {
 						%>
 						<td><%=queryData.getColumnName().get(j).toUpperCase()%> <%
- 	}
- %></td>
+ 							}
+				 		%></td>
 					</tr>
 					<%
 						int x = 0;
@@ -269,7 +269,7 @@
 					mistake, please contact your system administrator.
 				</p>
 				<%
-					String[] table = request.getParameterValues("table[]");
+						String[] table = request.getParameterValues("table[]");
 						String[] column = request.getParameterValues("column[]");
 						String[] condition = request.getParameterValues("condition[]");
 						int noOfQueriedItems = (Integer) request.getAttribute("noOfQueriedItems");
@@ -296,14 +296,14 @@
 					<%=condition[j].toUpperCase()%>
 					<%
 						}
-										}
-									}
-								}
-							}
+					}
+				}
+			}
+		}
 					%>
 				</p>
 				<%
-					}
+	}
 				%>
 			</div>
 		</div>
