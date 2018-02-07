@@ -11,11 +11,18 @@
 	<title>Meadow Diagram - Laminae</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon-196x196.png" sizes="196x196" />
+	<link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
+	<link rel="icon" type="image/png" href="images/favicon-128.png" sizes="128x128" />
+	
 	<!--<link rel="stylesheet" href="bootstrap.css">-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/base.css">
-	<link rel="stylesheet" href="css/meadow/meadow.css">
-	<link rel="stylesheet" href="css//meadow/meadowTest.css">
+	<link rel="stylesheet" href="css/meadow.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 

@@ -9,6 +9,14 @@
 <title>Query - Laminae</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon-196x196.png" sizes="196x196" />
+	<link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
+	<link rel="icon" type="image/png" href="images/favicon-128.png" sizes="128x128" />
+
 <!--<link rel="stylesheet" href="bootstrap.css">-->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -116,7 +124,7 @@
 	<div class="container-fluid text-center">
 		<div class="row content">
 			<div class="col-md-12 sidenav">
-				<h1>Find something</h1>
+				<h1>Find something <small>[beta]</small></h1>
 				<%
 					String filterStatus = request.getParameter("status");
 					if (filterStatus != null && filterStatus.equals("error")) {
