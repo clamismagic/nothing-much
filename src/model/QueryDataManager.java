@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class QueryDataManager {
 
@@ -45,28 +47,41 @@ public class QueryDataManager {
 	}
 
 	public List<String> getColumns(String table) {
-		List<String> queryData = new ArrayList<String>();
+		List<String> columns = new ArrayList<String>();
 		try {
 			DatabaseMetaData metaData = conn.getMetaData();
 			ResultSet metaDataRs = metaData.getColumns(null, null, table, null);
 
 			while (metaDataRs.next()) {
 				String columnName = metaDataRs.getString("COLUMN_NAME");
-				queryData.add(columnName);
+				columns.add(columnName);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return queryData;
+		return columns;
 	}
 
 	public QueryData getData(String column, String table) {
 		int counter = 1;
 		QueryData queryData = new QueryData();
+		ArrayList<String> allTables = new ArrayList<String>();
 		ArrayList<String> columnName = new ArrayList<String>();
 		ArrayList<String> columnData = new ArrayList<String>();
 		try {
+			boolean validateStatus = validation(table, column);
+			if (validateStatus == false) {
+				return null;
+			}
+			allTables = getTables();
+			for (int i = 0; i < allTables.size(); i++) {
+				if (table.equals(allTables.get(i))) {
+					break;
+				} else if (i == allTables.size()-1) {
+					return null;
+				}
+			}
 			DatabaseMetaData metaData = conn.getMetaData();
 			ResultSet metaDataRs;
 			if (column.equals("*")) {
@@ -104,6 +119,10 @@ public class QueryDataManager {
 		ArrayList<String> columnName = new ArrayList<String>();
 		ArrayList<String> columnData = new ArrayList<String>();
 		try {
+			boolean validateStatus = validation(table, column, condition);
+			if (validateStatus == false) {
+				return null;
+			}
 			DatabaseMetaData metaData = conn.getMetaData();
 			ResultSet metaDataRs;
 			if (column.equals("*")) {
@@ -141,6 +160,80 @@ public class QueryDataManager {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	private boolean validation(String table, String column) {
+		ArrayList<String> allTables = new ArrayList<String>();
+		List<String> allColumns = new ArrayList<String>();
+		allTables = getTables();
+		for (int i = 0; i < allTables.size(); i++) {
+			if (table.equals(allTables.get(i))) {
+				allColumns = getColumns(table);
+				if (column.equals("*")) {
+					return true;
+				} else {
+					for (int j = 0; j < allColumns.size(); j++) {
+						if (column.equals(allColumns.get(j))) {
+							return true;
+						}
+					}
+					return false;
+				}
+			} else if (i == allTables.size()-1) {
+				return false;
+			}
+		}
+		return false;
+	}
+	
+	private boolean validation(String table, String column, String[] condition) {
+		ArrayList<String> allTables = new ArrayList<String>();
+		List<String> allColumns = new ArrayList<String>();
+		allTables = getTables();
+		for (int i = 0; i < allTables.size(); i++) {
+			if (table.equals(allTables.get(i))) {
+				allColumns = getColumns(table);
+				if (column.equals("*")) {
+					for (int k = 0; k < condition.length; k++) {
+						if (condition[k] == null || condition[k].trim().isEmpty()) {
+					         return false;
+					     }
+					     Pattern pattern = Pattern.compile("[^A-Za-z0-9\\_<>=+!*'\".\\- ]");
+					     Matcher matcher = pattern.matcher(condition[k]);
+					    // boolean b = m.matches();
+					     boolean status = matcher.find();
+					     if (status == true) {
+					    	 return false;
+					     } else {
+					         return true;
+					     }
+					}
+				} else {
+					for (int j = 0; j < allColumns.size(); j++) {
+						if (column.equals(allColumns.get(j))) {
+							for (int k = 0; k < condition.length; k++) {
+								if (condition[k] == null || condition[k].trim().isEmpty()) {
+							         return false;
+							     }
+							     Pattern pattern = Pattern.compile("[^A-Za-z0-9\\_<>=+!*'\".\\- ]");
+							     Matcher matcher = pattern.matcher(condition[k]);
+							    // boolean b = m.matches();
+							     boolean status = matcher.find();
+							     if (status == true) {
+							    	 return false;
+							     } else {
+							         return true;
+							     }
+							}
+						}
+					}
+					return false;
+				}
+			} else if (i == allTables.size()-1) {
+				return false;
+			}
+		}
+		return false;
 	}
 
 }
