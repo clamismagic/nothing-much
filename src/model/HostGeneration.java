@@ -60,7 +60,6 @@ public class HostGeneration {
 
 		return new int[] { (int) (605 + (distance * Math.cos(Math.toRadians(angle)) * changexy[0])),
 				(int) (250 + (distance * Math.sin(Math.toRadians(angle)) * changexy[1])) };
-
 	}
 
 	public static int[] generatexypos(int degrees, int distance, HashMap<String, int[]> hostcoords) {

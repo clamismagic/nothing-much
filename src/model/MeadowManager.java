@@ -76,10 +76,6 @@ public class MeadowManager {
 					allhostrisks.put(singlehostentry, allvalues.toString());
 				}
 			}
-			
-		/*	toPassXYcoords.add("centre=400,200");
-			allhostrisks.put("centre", "10,0 10,10 20,10 0,10 10,10 4,18 10,10 16,18 10,10");
-			allHosts.add("centre"); */
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

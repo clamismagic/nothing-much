@@ -11,6 +11,7 @@
 label:hover {/* Minor fix */
 	cursor: default;
 }
+
 table {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;

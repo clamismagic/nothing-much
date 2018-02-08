@@ -123,12 +123,6 @@
 			</p>
 		</div>
 		<!-- https://www.w3schools.com/colors/colors_picker.asp -->
-		<%-- <div class="slidecontainer" bottom="5px" onmousedown="viewTime()" onmouseup="passtimestamp()">
-				<input type="range" min="<%=date.getTime() - 1514829136%>" max="<%=date.getTime()%>" value="<%=date.getTime()%>" class="slider" id="myRange">
-				<p>
-					Value: <span id="demo">Now</span>
-				</p>
-			</div> --%>
 	</div>
 	<div id="missingHost"></div>
 			
