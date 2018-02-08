@@ -102,7 +102,7 @@
 
 	<div class="container-fluid text-center">
 		<div class="row content">
-			<div class="col-md-12 sidenav">
+			<div class="col-md-12">
 				<h1>
 					Find something <small>[beta]</small>
 				</h1>
@@ -180,9 +180,11 @@
 				</form>
 			</div>
 			<div class="col-md-12">
-				<h1>Search result</h1>
 				<%
 					if (filterStatus != null && filterStatus.equals("success")) {
+				%>
+				<h1>Search result</h1>
+				<%
 						String[] table = request.getParameterValues("table[]");
 						String[] column = request.getParameterValues("column[]");
 						String[] condition = request.getParameterValues("condition[]");
