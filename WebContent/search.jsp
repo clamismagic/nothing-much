@@ -11,11 +11,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/favicon-196x196.png" sizes="196x196" />
-	<link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96" />
-	<link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
-	<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
-	<link rel="icon" type="image/png" href="images/favicon-128.png" sizes="128x128" />
+<link rel="icon" type="image/png" href="images/favicon-196x196.png"
+	sizes="196x196" />
+<link rel="icon" type="image/png" href="images/favicon-96x96.png"
+	sizes="96x96" />
+<link rel="icon" type="image/png" href="images/favicon-32x32.png"
+	sizes="32x32" />
+<link rel="icon" type="image/png" href="images/favicon-16x16.png"
+	sizes="16x16" />
+<link rel="icon" type="image/png" href="images/favicon-128.png"
+	sizes="128x128" />
 
 <!--<link rel="stylesheet" href="bootstrap.css">-->
 <link rel="stylesheet"
@@ -93,44 +98,20 @@
 
 <body>
 
-	<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#myNavbar">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="logo" href="index.html"><img src="images/logo_main.png"
-				alt="Logo"></a>|||
-		</div>
-		<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="meadow.jsp">Meadow</a></li>
-				<li class="active"><a href="search.jsp">Query</a></li>
-				<li><a href="#">Contact</a></li>
-				<li><a href="#">Guide</a></li>
-				<li><a href="credits.html">Credits & Acknowledgements</a></li>
-			</ul>
-			<!-- <ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-						Login</a></li>
-			</ul> -->
-		</div>
-	</div>
-	</nav>
+	<jsp:include page="header.html"></jsp:include>
 
 	<div class="container-fluid text-center">
 		<div class="row content">
 			<div class="col-md-12 sidenav">
-				<h1>Find something <small>[beta]</small></h1>
+				<h1>
+					Find something <small>[beta]</small>
+				</h1>
 				<%
 					String filterStatus = request.getParameter("status");
 					if (filterStatus != null && filterStatus.equals("error")) {
 				%>
-				<p class="errorMessage">We are unable to locate what you are
-					finding.</p>
+				<p class="errorMessage">We are unable to locate anything that
+					suits your query, please ensure that all your entries are valid.</p>
 				<%
 					} else if (filterStatus != null && filterStatus.equals("error2")) {
 				%>
@@ -241,8 +222,8 @@
 							for (int j = 0; j < queryData.getColumnName().size(); j++) {
 						%>
 						<td><%=queryData.getColumnName().get(j).toUpperCase()%> <%
- 							}
-				 		%></td>
+ 	}
+ %></td>
 					</tr>
 					<%
 						int x = 0;
@@ -277,7 +258,7 @@
 					mistake, please contact your system administrator.
 				</p>
 				<%
-						String[] table = request.getParameterValues("table[]");
+					String[] table = request.getParameterValues("table[]");
 						String[] column = request.getParameterValues("column[]");
 						String[] condition = request.getParameterValues("condition[]");
 						int noOfQueriedItems = (Integer) request.getAttribute("noOfQueriedItems");
@@ -304,21 +285,21 @@
 					<%=condition[j].toUpperCase()%>
 					<%
 						}
-					}
-				}
-			}
-		}
+										}
+									}
+								}
+							}
 					%>
 				</p>
 				<%
-	}
+					}
 				%>
 			</div>
 		</div>
 	</div>
 
 	<jsp:include page="footer.html"></jsp:include>
-	
+
 </body>
 
 </html>
