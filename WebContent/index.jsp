@@ -12,6 +12,14 @@
 	<title>Meadow Diagram - Laminae</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon-196x196.png" sizes="196x196" />
+	<link rel="icon" type="image/png" href="images/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
+	<link rel="icon" type="image/png" href="images/favicon-128.png" sizes="128x128" />
+	
 	<!--<link rel="stylesheet" href="bootstrap.css">-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/base.css">
@@ -28,31 +36,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-	<div class="container-fluid">
-	<div class="navbar-header">
-		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-		<span class="icon-bar"></span>
-		<span class="icon-bar"></span>
-		<span class="icon-bar"></span>						
-		</button>
-		<a class="logo" href="#"><img src="img/noun_1324981_cc1.png" alt="Logo"></a>|||
-	</div>
-	<div class="collapse navbar-collapse" id="myNavbar">
-		<ul class="nav navbar-nav">
-		<li><a href="#">Home</a></li>
-		<li class="active"><a href="#">Meadow</a></li>
-		<li><a href="#">Query</a></li>
-		<li><a href="#">Graph</a></li>
-		<li><a href="#">Aggregate Chart</a></li>
-		<li><a href="#">Contact & Guide</a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-		<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-		</ul>
-	</div>
-	</div>
-</nav>
+<jsp:include page="header.html"></jsp:include>
 	
 <div class="container-fluid text-center">	
 	<div class="row content">
