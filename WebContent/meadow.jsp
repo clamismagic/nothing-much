@@ -14,8 +14,7 @@
 	<!--<link rel="stylesheet" href="bootstrap.css">-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/base.css">
-	<link rel="stylesheet" href="css/meadow/meadow.css">
-	<link rel="stylesheet" href="css//meadow/meadowTest.css">
+	<link rel="stylesheet" href="css/meadow.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -101,14 +100,13 @@
 								meadow = (Meadow) request.getAttribute("meadow");
 							}
 							DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-							java.util.Date maxTime = new java.util.Date(1478045100000L); // update maxTime according to relevant timestamp
+							java.util.Date maxTime = new java.util.Date(1505779200000L); // update maxTime according to relevant timestamp
 							java.util.Date fiveMinBefore = new java.util.Date(maxTime.getTime() - 3600 * 1000);
 						%>
 						<input type="hidden" name="currentTime" value="<%=df.format(maxTime)%>" /> <input type="hidden" name="fiveMinBefore" value="<%=df.format(fiveMinBefore)%>" />
 					</p>
 					<input id="submitQuery" type="submit" value="Filter" />
 				</form>
-		
 	</div>
 	
 	<%

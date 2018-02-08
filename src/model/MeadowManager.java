@@ -60,7 +60,7 @@ public class MeadowManager {
 					allvalues.append("10,10 ");
 				}
 				avgRisk /= checkboxes.length;
-				int distance = (int) Math.sqrt((((1 - avgRisk) / 2) * 800 * 400 / Math.PI)) + 20;
+				int distance = (int) Math.sqrt((((1 - avgRisk) / 2) * 1210 * 500 / Math.PI)) + 20;
 				int[] currenthostcords = null;
 				int attemptCoord = 0;
 				while (currenthostcords == null) {

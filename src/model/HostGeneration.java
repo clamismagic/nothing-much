@@ -58,7 +58,7 @@ public class HostGeneration {
 			changexy = new int[] { -1, -1 };
 		}
 
-		return new int[] { (int) (400 + (distance * Math.cos(Math.toRadians(angle)) * changexy[0])),
+		return new int[] { (int) (605 + (distance * Math.cos(Math.toRadians(angle)) * changexy[0])),
 				(int) (250 + (distance * Math.sin(Math.toRadians(angle)) * changexy[1])) };
 
 	}
@@ -67,7 +67,7 @@ public class HostGeneration {
 		int[] tocheck = calcCoords(degrees, distance);
 		for (HashMap.Entry<String, int[]> currentcoords : hostcoords.entrySet()) {
 			int[] existingcoords = currentcoords.getValue();
-			if (Math.abs(tocheck[0] - existingcoords[0]) < 30 && Math.abs(tocheck[1] - existingcoords[1]) < 30) {
+			if (Math.abs(tocheck[0] - existingcoords[0]) < 30 && Math.abs(tocheck[1] - existingcoords[1]) < 30 || tocheck[0] < 0 || tocheck[1] < 0) {
 				return null;
 			}
 		}
