@@ -83,20 +83,21 @@
 								meadow = (Meadow) request.getAttribute("meadow");
 							}
 							DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-							java.util.Date maxTime = new java.util.Date(1505779200000L); // update maxTime according to relevant timestamp
+							java.util.Date maxTime = new java.util.Date(1478045100000L); // update maxTime according to relevant timestamp
 							java.util.Date fiveMinBefore = new java.util.Date(maxTime.getTime() - 3600 * 1000);
 						%>
 						<input type="hidden" name="currentTime" value="<%=df.format(maxTime)%>" /> <input type="hidden" name="fiveMinBefore" value="<%=df.format(fiveMinBefore)%>" />
 					</p>
 					<input id="submitQuery" type="submit" value="Filter" />
 				</form>
+		
 	</div>
 	
 	<%
 		Date date = new Date();
 	%>
 		
-	<div class="col-sm-10 text-left" id="main"> 
+	<div class="col-sm-8 text-left" id="main"> 
 		
 		<div id="centerpoint">
 			<svg width="21" height="10"><circle cx="5" cy="5" r="4" stroke="black" stroke-width="0" fill="red" /></svg>
@@ -123,7 +124,26 @@
 			</p>
 		</div>
 		<!-- https://www.w3schools.com/colors/colors_picker.asp -->
+		<%-- <div class="slidecontainer" bottom="5px" onmousedown="viewTime()" onmouseup="passtimestamp()">
+				<input type="range" min="<%=date.getTime() - 1514829136%>" max="<%=date.getTime()%>" value="<%=date.getTime()%>" class="slider" id="myRange">
+				<p>
+					Value: <span id="demo">Now</span>
+				</p>
+			</div> --%>
 	</div>
+	<div class="col-sm-2">
+                <div class="well">
+                    <h4>Legend</h4>
+                    <hr>
+					<p><img src="images/host.png" alt="Host">  Host</p>
+					<p><svg width="21" height="10"><circle cx="5" cy="5" r="4" stroke="black" stroke-width="0" fill="red" /></svg>Center reference</p>
+					<p><svg height="10" width="5"><line x1="0" y1="0" x2="10" y2="0" style="stroke:#ff0000;stroke-width:12" />Sorry, your browser does not support inline SVG.</svg>  Risk Factor 0.9</p>
+					<p><svg height="10" width="5"><line x1="0" y1="0" x2="10" y2="0" style="stroke:#ff4000;stroke-width:12" />Sorry, your browser does not support inline SVG.</svg>  Risk Factor 0.8</p>
+					<p><svg height="10" width="5"><line x1="0" y1="0" x2="10" y2="0" style="stroke:#ff8000;stroke-width:12" />Sorry, your browser does not support inline SVG.</svg>  Risk Factor 0.7</p>
+					<p><svg height="10" width="5"><line x1="0" y1="0" x2="10" y2="0" style="stroke:#ffbf00;stroke-width:12" />Sorry, your browser does not support inline SVG.</svg>  Risk Factor 0.5</p>
+					<p><svg height="10" width="5"><line x1="0" y1="0" x2="10" y2="0" style="stroke:#bfff00;stroke-width:12" />Sorry, your browser does not support inline SVG.</svg>  Risk Factor 0.3</p>
+                </div>
+            </div>
 	<div id="missingHost"></div>
 			
 	

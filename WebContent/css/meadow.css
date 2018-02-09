@@ -11,7 +11,6 @@
 label:hover {/* Minor fix */
 	cursor: default;
 }
-
 table {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
@@ -32,41 +31,41 @@ tr:nth-child(even) {
 
 .slidecontainer {
 	position: relative;
-	top: 600px;
+	top: 500px;
 }
 
 #centerpoint {
 	position: absolute;
 	top: 250px;
-	left: 605px;
+	left: 515px;
 }
 
 #radius09 {
 	position: absolute;
 	top: 50px;
-	left: 400px;
+	left: 310px;
 }
 
 #radius08 {
 	position: absolute;
 	top: 50px;
-	left: 400px;
+	left: 310px;
 }
 
 #radius07 {
 	position: absolute;
 	top: 50px;
-	left: 400px;
+	left: 310px;
 }
 
 #radius05 {
 	position: absolute;
 	top: 50px;
-	left: 400px;
+	left: 310px;
 }
 
 #radius03 {
 	position: absolute;
 	top: 50px;
-	left: 400px;
+	left: 310px;
 }
