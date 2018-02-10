@@ -26,58 +26,70 @@ var Log = {
 };
 
 
-function init(){
+function init(allHostnames, allTraffic, hostname){
+	console.log(allHostnames);
+	console.log(allTraffic);
+	var hostnames = allHostnames.split(", ");
+	var traffic = allTraffic.split(", ");
+	var allIncoming = 0;
+	var allOutgoing = 0;
+	for (var idx = 0; idx < traffic.length; idx++) {
+		allIncoming += parseInt(traffic[idx].split(",")[0]);
+		allOutgoing += parseInt(traffic[idx].split(",")[1]);
+	}
+	
+	
   //init data
   var json = {
       'label': ['Incoming Traffic', 'Outgoing Traffic'],
       'values': [
       {
-        'label': 'HOST X',
-        'values': [20, 40]
+        'label': 'HOST',
+        'values': []
       },
 	  {
         'label': '',
         'values': []
       },
       {
-        'label': '1',
-        'values': [30, 10]
+        'label': hostnames[0],
+        'values': [traffic[0].split(",")[0], traffic[0].split(",")[1]]
       },
       {
-        'label': '2',
-        'values': [38, 20]
+        'label': hostnames[1],
+        'values': [traffic[1].split(",")[0], traffic[1].split(",")[1]]
       },
       {
-        'label': '3',
-        'values': [58, 10]
+        'label': hostnames[2],
+        'values': [traffic[2].split(",")[0], traffic[2].split(",")[1]]
       },
       {
-        'label': '4',
-        'values': [55, 60]
+        'label': hostnames[3],
+        'values': [traffic[3].split(",")[0], traffic[3].split(",")[1]]
       },
 	  {
-        'label': '5',
-        'values': [55, 60]
+        'label': hostnames[4],
+        'values': [traffic[4].split(",")[0], traffic[4].split(",")[1]]
       }, 
 	  {
-        'label': '6',
-        'values': [55, 60]
+        'label': hostnames[5],
+        'values': [traffic[5].split(",")[0], traffic[5].split(",")[1]]
       }, 
 	  {
-        'label': '7',
-        'values': [55, 60]
+        'label': hostnames[6],
+        'values': [traffic[6].split(",")[0], traffic[6].split(",")[1]]
       }, 
 	  {
-        'label': '8',
-        'values': [55, 60]
+        'label': hostnames[7],
+        'values': [traffic[7].split(",")[0], traffic[7].split(",")[1]]
       }, 
 	  {
-        'label': '9',
-        'values': [55, 60]
+        'label': hostnames[8],
+        'values': [traffic[8].split(",")[0], traffic[8].split(",")[1]]
       }, 
       {
-        'label': '10',
-        'values': [26, 40]
+        'label': hostnames[9],
+        'values': [traffic[9].split(",")[0], traffic[9].split(",")[1]]
       }]
       
   };
@@ -138,7 +150,7 @@ function init(){
       Tips: {
         enable: true,
         onShow: function(tip, elem) {
-          tip.innerHTML = "<b>" + elem.name + "</b>: " + elem.value + " Packets/s";
+          tip.innerHTML = "<b>" + elem.name + "</b>: " + elem.value + " bytes";
         }
       }
     });

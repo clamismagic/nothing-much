@@ -83,8 +83,9 @@
 								meadow = (Meadow) request.getAttribute("meadow");
 							}
 							DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-							java.util.Date maxTime = new java.util.Date(1478045100000L); // update maxTime according to relevant timestamp
+							java.util.Date maxTime = new java.util.Date(1505833200000L); // update maxTime according to relevant timestamp
 							java.util.Date fiveMinBefore = new java.util.Date(maxTime.getTime() - 3600 * 1000);
+							java.util.Date minTime = new java.util.Date(1505577600000L);
 						%>
 						<input type="hidden" name="currentTime" value="<%=df.format(maxTime)%>" /> <input type="hidden" name="fiveMinBefore" value="<%=df.format(fiveMinBefore)%>" />
 					</p>
@@ -117,8 +118,8 @@
 		<div id ="radius03">
 			<svg height="500" width="500"><circle cx="210" cy="210" r="209" stroke="#bfff00" stroke-width="3" stroke-opacity="1" fill="red" fill-opacity="0"/></svg>
 		</div>
-		<div class="slidecontainer" bottom="5px" onmousedown="viewTime()" onmouseup="passtimestamp(<%=fiveMinBefore.getTime() - 86400000 %>, <%=maxTime.getTime() %>)">
-			<input type="range" min="<%=fiveMinBefore.getTime() - 86400000 %>" max="<%=maxTime.getTime() %>" value="<%=maxTime.getTime() %>" class="slider" id="myRange">
+		<div class="slidecontainer" bottom="5px" onmousedown="viewTime()" onmouseup="passtimestamp(<%=minTime.getTime() %>, <%=maxTime.getTime() %>)">
+			<input type="range" min="<%=minTime.getTime() %>" max="<%=maxTime.getTime() %>" value="<%=maxTime.getTime() %>" class="slider" id="myRange">
 			<p>
 				Value: <span id="demo">Now</span>
 			</p>
@@ -149,7 +150,7 @@
 	
 	</div>
 </div>
-	<script type="text/javascript" src="js/test-edit.js"></script>
+	<script type="text/javascript" src="js/meadow.js"></script>
 	<%
 		if (meadow.getAllHosts() != null) {
 	%>

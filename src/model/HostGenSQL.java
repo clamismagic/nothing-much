@@ -27,7 +27,6 @@ public class HostGenSQL {
 
 	public PreparedStatement riskcheckbyhostandrisk() throws SQLException {
 		return conn.prepareStatement("select riskfactor from riskoutput where hostname = ? and riskname = ? and timestamp between ? and ? order by timestamp");
-		// select riskfactor from test where hostname = ? and riskname = ? and timestamp >= <insert 5 min before current time> order by timestamp
 	}
 
 	public List<String> hostname(String startTime, String endTime) {
@@ -75,5 +74,19 @@ public class HostGenSQL {
 		}
 		return riskName;
 		
+	}
+	
+	public ArrayList<String> popConnectBarChart(String hostname, long timestamp) throws SQLException {
+		ArrayList<String> connectValues = new ArrayList<>();
+		PreparedStatement pstmt = conn.prepareStatement("select destip, countconn, amtIncoming, amtOutgoing from visualalgo where hostname = ? and timestamp = ?");
+		pstmt.setString(1, hostname);
+		pstmt.setDate(2, new java.sql.Date(timestamp));
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			connectValues.add(rs.getString(1) + ", " + rs.getInt(2) + ", " + rs.getInt(3) + "," + rs.getInt(4));
+		}
+		
+		return connectValues;
 	}
 }

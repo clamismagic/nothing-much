@@ -94,6 +94,19 @@
 		downloadCSV(csv.join("\n"), filename);
 	}
 </script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <script>
+  $( function() {
+    $( ".widget input[type=submit], .widget a, .widget button" ).button();
+    $( "button, input, a" ).click( function( event ) {
+      event.preventDefault();
+    } );
+  } );
+  </script>
 </head>
 
 <body>
@@ -104,7 +117,7 @@
 		<div class="row content">
 			<div class="col-md-12">
 				<h1>
-					Find something <small>[beta]</small>
+					Find something
 				</h1>
 				<%
 					String filterStatus = request.getParameter("status");
@@ -123,9 +136,12 @@
 				<%
 					int statementCount = 0;
 				%>
+				<div><p>hello</p></div>
+				<div class="col-md-12"></div>
 				<form method="post" action="searchServlet">
-					<div class="search">
+					<div class="search" id="queryForm">
 						<table id="searchForm0" class="searchForm">
+						<p><button class="ui-button ui-widget ui-corner-all searchFormBtn add-more" type="button" onclick=<%statementCount++;%>>Add Condition</button></p>
 							<tr>
 								<td>SELECT TABLE*:</td>
 								<td>
@@ -161,12 +177,6 @@
 								<td><input type="text" name="condition[]" class="condition"
 									id="condition0" placeholder="Condition" /></td>
 							</tr>
-							<tr>
-								<td>
-									<button class="searchFormBtn add-more" type="button"
-										onclick=<%statementCount++;%>>Add Condition</button>
-								</td>
-							</tr>
 						</table>
 					</div>
 					<%
@@ -179,12 +189,13 @@
 					</p>
 				</form>
 			</div>
-			<div class="col-md-12">
-				<%
-					if (filterStatus != null && filterStatus.equals("success")) {
-				%>
+			<div class="col-md-12" id="results">
+			<%
+				if (filterStatus != null) {
+			%>
 				<h1>Search result</h1>
 				<%
+					if (filterStatus.equals("success")) {
 						String[] table = request.getParameterValues("table[]");
 						String[] column = request.getParameterValues("column[]");
 						String[] condition = request.getParameterValues("condition[]");
@@ -218,7 +229,7 @@
 				</p>
 				<button class="searchFormBtn" onclick="exportTableToCSV('logs.csv')">Export
 					to CSV</button>
-				<table class="searchQuery">
+				<table class="search">
 					<tr id="searchResultHeader">
 						<%
 							for (int j = 0; j < queryData.getColumnName().size(); j++) {
@@ -294,7 +305,7 @@
 					%>
 				</p>
 				<%
-					}
+					}}
 				%>
 			</div>
 		</div>

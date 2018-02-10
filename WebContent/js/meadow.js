@@ -3,6 +3,9 @@ function populateMainDiv(hostname, map, hostpos) {
 	var i;
 	var j;
 	var mainDiv = document.getElementById("main");
+	var slider = document.getElementById("myRange");
+	var utcSeconds = Math.floor(slider.value / 1000);
+	var timeNow = utcSeconds * 1000;
 
 	// parse hostname array from jsp
 	var splitHost = hostname.substr(1).slice(0, -1); // to remove first and last '[]' from string
@@ -38,7 +41,7 @@ function populateMainDiv(hostname, map, hostpos) {
 			});
 			
 			if (idname.localeCompare("") != 0) {
-				var htmlStr = '<a href="index-host.html" target="_blank" data-toggle="tooltip" data-html="true" data-placement="' + ttposition + '" title="" data-original-title="<h5>Host Name / Host ID / IP address</h5><hr><p>IP address: 10.0.1.1</p><p>Host name: Corporate-Web-Server</p><p>Host Owner: Ben</p><p>Location: Level 2-1</p>"><svg width="20" height="20"><polygon points="' + correctCoords + '" style="fill-opacity:0;stroke:black;stroke-width:1;fill-rule:nonzero;" /></svg></a></div>';
+				var htmlStr = '<a href="host-zoom.jsp?hostname=' + hostnameArray[i] + '&time=' + timeNow + '" target="_blank" data-toggle="tooltip" data-html="true" data-placement="' + ttposition + '" title="" data-original-title="<h5>Host Name / Host ID / IP address</h5><hr><p>IP address: 10.0.1.1</p><p>Host name: Corporate-Web-Server</p><p>Host Owner: Ben</p><p>Location: Level 2-1</p>"><svg width="20" height="20"><polygon points="' + correctCoords + '" style="fill-opacity:0;stroke:black;stroke-width:1;fill-rule:nonzero;" /></svg></a></div>';
 				mainDiv.innerHTML += '<div id="' + idname + '">' + htmlStr;
 				
 				//Styling code
@@ -89,21 +92,14 @@ function passtimestamp(minTime, maxTime) {
 	var parsedHour = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
 	var parsedMinSec = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"]
 	var currentTime = timeNow.getFullYear() + "-" + parsedMonth[timeNow.getMonth()] + "-" + parsedHour[timeNow.getDate()] + " " + parsedHour[timeNow.getHours()] + ":" + parsedMinSec[timeNow.getMinutes()] + ":" + parsedMinSec[timeNow.getSeconds()];
-	var lowerTime = new Date((utcSeconds - 300) * 1000);
+	var lowerTime = new Date((utcSeconds - 3600) * 1000);
 	var fiveMinBefore = lowerTime.getFullYear() + "-" + parsedMonth[lowerTime.getMonth()] + "-" + parsedHour[lowerTime.getDate()] + " " + parsedHour[lowerTime.getHours()] + ":" + parsedMinSec[lowerTime.getMinutes()] + ":" + parsedMinSec[lowerTime.getSeconds()];
 	console.log(currentTime);
 	console.log(fiveMinBefore);
 
 	// reset main div to blank canvas
 	document.getElementById("main").innerHTML = "<div id='centerpoint'><svg width='21' height='10'><circle cx='5' cy='5' r='4' stroke='black' stroke-width='0' fill='red' /></svg></div><div id ='radius09'><svg height='500' width='500'><circle cx='210' cy='210' r='91' stroke='#ff0000' stroke-width='3' stroke-opacity='1' fill='red' fill-opacity='0'/></svg></div><div id ='radius08'><svg height='500' width='500'><circle cx='210' cy='210' r='121' stroke='#ff4000' stroke-width='3' stroke-opacity='1' fill='red' fill-opacity='0'/></svg></div><div id ='radius07'><svg height='500' width='500'><circle cx='210' cy='210' r='144' stroke='#ff8000' stroke-width='3' stroke-opacity='1' fill='red' fill-opacity='0'/></svg></div><div id ='radius05'><svg height='500' width='500'><circle cx='210' cy='210' r='180' stroke='#ffbf00' stroke-width='3' stroke-opacity='1' fill='red' fill-opacity='0'/></svg></div><div id ='radius03'><svg height='500' width='500'><circle cx='210' cy='210' r='209' stroke='#bfff00' stroke-width='3' stroke-opacity='1' fill='red' fill-opacity='0'/></svg></div><div class='slidecontainer' bottom='5px' onmousedown='viewTime()' onmouseup='passtimestamp(" + minTime + ", " + maxTime + ")'><input type='range' min='" + minTime + "' max='" + maxTime + "' value='" + utcSeconds * 1000 + "' class='slider' id='myRange'><p>Value: <span id='demo'>" + timeNow + "</span></p></div>";
-	/*var data = {
-        currentTime : currentTime,
-        fiveMinBefore : fiveMinBefore,
-        timelineMetrics : metrics
-    }
-	$.post("/fyp_TheFourHorsemen_V1/filterServlet", $.param(data), function(responseJson) {
-		console.log(responseJson);
-	});*/
+	
 	$.ajax({
 	    url: "/fyp_TheFourHorsemen_V1/filterServlet",
 	    data: {

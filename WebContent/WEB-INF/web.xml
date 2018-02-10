@@ -20,6 +20,6 @@
     <param-value>jdbc:mysql://localhost/fyp</param-value>
   </context-param>
   <error-page>
-  	<location>/error.jsp</location>
+    <location>/error.jsp</location>
   </error-page>
 </web-app>
