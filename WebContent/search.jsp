@@ -99,14 +99,14 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
-    <script>
+ <!--   <script>
   $( function() {
     $( ".widget input[type=submit], .widget a, .widget button" ).button();
     $( "button, input, a" ).click( function( event ) {
       event.preventDefault();
     } );
   } );
-  </script>
+  </script> -->
 </head>
 
 <body>
@@ -184,8 +184,7 @@
 					%>
 					<p id="importantNote">*Compulsory fields.</p>
 					<p>
-						<input id="submitQuery" type="submit" value="Query"
-							onclick="generateIds()" />
+						<input id="submitQuery" type="submit" value="Query" />
 					</p>
 				</form>
 			</div>
