@@ -136,7 +136,6 @@
 				<%
 					int statementCount = 0;
 				%>
-				<div><p>hello</p></div>
 				<div class="col-md-12"></div>
 				<form method="post" action="searchServlet">
 					<div class="search" id="queryForm">
