@@ -27,9 +27,8 @@ var Log = {
 
 
 function init(allHostnames, allTraffic, hostname){
-	console.log(allHostnames);
-	console.log(allTraffic);
 	var hostnames = allHostnames.split(", ");
+	console.log(hostnames[0]);
 	var traffic = allTraffic.split(", ");
 	var allIncoming = 0;
 	var allOutgoing = 0;
@@ -52,43 +51,43 @@ function init(allHostnames, allTraffic, hostname){
         'values': []
       },
       {
-        'label': hostnames[0],
+        'label': hostnames[0].split(".")[0] + "." + hostnames[0].split(".")[1] + ".x.x",
         'values': [traffic[0].split(",")[0], traffic[0].split(",")[1]]
       },
       {
-        'label': hostnames[1],
+        'label': hostnames[1].split(".")[0] + "." + hostnames[1].split(".")[1] + ".x.x",
         'values': [traffic[1].split(",")[0], traffic[1].split(",")[1]]
       },
       {
-        'label': hostnames[2],
+        'label': hostnames[2].split(".")[0] + "." + hostnames[2].split(".")[1] + ".x.x",
         'values': [traffic[2].split(",")[0], traffic[2].split(",")[1]]
       },
       {
-        'label': hostnames[3],
+        'label': hostnames[3].split(".")[0] + "." + hostnames[3].split(".")[1] + ".x.x",
         'values': [traffic[3].split(",")[0], traffic[3].split(",")[1]]
       },
 	  {
-        'label': hostnames[4],
+        'label': hostnames[4].split(".")[0] + "." + hostnames[4].split(".")[1] + ".x.x",
         'values': [traffic[4].split(",")[0], traffic[4].split(",")[1]]
       }, 
 	  {
-        'label': hostnames[5],
+        'label': hostnames[5].split(".")[0] + "." + hostnames[5].split(".")[1] + ".x.x",
         'values': [traffic[5].split(",")[0], traffic[5].split(",")[1]]
       }, 
 	  {
-        'label': hostnames[6],
+        'label': hostnames[6].split(".")[0] + "." + hostnames[6].split(".")[1] + ".x.x",
         'values': [traffic[6].split(",")[0], traffic[6].split(",")[1]]
       }, 
 	  {
-        'label': hostnames[7],
+        'label': hostnames[7].split(".")[0] + "." + hostnames[7].split(".")[1] + ".x.x",
         'values': [traffic[7].split(",")[0], traffic[7].split(",")[1]]
       }, 
 	  {
-        'label': hostnames[8],
+        'label': hostnames[8].split(".")[0] + "." + hostnames[8].split(".")[1] + ".x.x",
         'values': [traffic[8].split(",")[0], traffic[8].split(",")[1]]
       }, 
       {
-        'label': hostnames[9],
+        'label': hostnames[9].split(".")[0] + "." + hostnames[9].split(".")[1] + ".x.x",
         'values': [traffic[9].split(",")[0], traffic[9].split(",")[1]]
       }]
       

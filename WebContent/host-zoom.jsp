@@ -99,7 +99,6 @@
 							for (var i = 0; i < arrAmp.length; i++) {
 								lineTo.push(parseInt(arrAmp[i]) * 10);
 							}
-							console.log(lineTo);
 							// var lineTo = [100, 50, 90, 150, 133, 80, 40, 10, 190, 86];// length of amplitude
 							var hostXcoords = [165, 230, 300, 365, 435, 500, 570, 635, 705, 775]; // TODO fill up rest
 							var xSpecifiedHost = 25; // origin of specified host
