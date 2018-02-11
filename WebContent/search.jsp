@@ -136,7 +136,6 @@
 				<%
 					int statementCount = 0;
 				%>
-				<div class="col-md-12"></div>
 				<form method="post" action="searchServlet">
 					<div class="search" id="queryForm">
 						<table id="searchForm0" class="searchForm">
@@ -225,8 +224,22 @@
 									}
 					%>
 				</p>
-				<button class="searchFormBtn" onclick="exportTableToCSV('logs.csv')">Export
-					to CSV</button>
+				<form action="exportServlet" method="get">
+					<input type="hidden" value="<%=table[i] %>" name="table" />
+					<input type="hidden" value="<%=column[i] %>" name="column" />
+					<%
+						if (condition[i] != "") {
+							for (int j = 0; j < condition.length; j++) {
+					%>
+					<input type="hidden" value="<%=condition[j] %>" name="condition[]" />
+					<%
+							}
+						}
+					%>
+					<input type="submit" class="searchFormBtn" value="Export to CSV" />
+				</form>
+				<!-- <button class="searchFormBtn" onclick="exportTableToCSV('logs.csv')">Export
+					to CSV</button> -->
 				<table class="search">
 					<tr id="searchResultHeader">
 						<%

@@ -3,10 +3,13 @@ package model;
 import theFourHorsemen.dbConnection;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -160,6 +163,129 @@ public class QueryDataManager {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public String exportAllData(String column, String table) {
+		String output = "";
+		ArrayList<String> allTables = new ArrayList<String>();
+		ArrayList<String> columnName = new ArrayList<String>();
+		try {
+			boolean validateStatus = validation(table, column);
+			if (validateStatus == false) {
+				return null;
+			}
+			allTables = getTables();
+			for (int i = 0; i < allTables.size(); i++) {
+				if (table.equals(allTables.get(i))) {
+					break;
+				} else if (i == allTables.size()-1) {
+					return null;
+				}
+			}
+			DatabaseMetaData metaData = conn.getMetaData();
+			ResultSet metaDataRs;
+			if (column.equals("*")) {
+				metaDataRs = metaData.getColumns(null, null, table, null);
+			} else {
+				metaDataRs = metaData.getColumns(null, null, table, column);
+			}
+			while (metaDataRs.next()) {
+				columnName.add(metaDataRs.getString("COLUMN_NAME"));
+			}
+			for (int i = 0; i < columnName.size(); i++) {
+				if (i == columnName.size()-1) {
+					output += columnName.get(i).toString().toUpperCase() + "\n";
+				} else {
+					output += columnName.get(i).toString().toUpperCase() + ",";
+				}
+			}
+			String selectDataSQL = "SELECT " + column + " FROM " + table;
+			PreparedStatement selectDataPstmt = conn.prepareStatement(selectDataSQL);
+			ResultSet selectDataRs = selectDataPstmt.executeQuery();
+			while (selectDataRs.next()) {
+				for (int i = 0; i < columnName.size(); i++) {
+					if (i == columnName.size()-1) {
+						output += selectDataRs.getObject(columnName.get(i).toString()) + "\n";
+					} else {
+						output += selectDataRs.getObject(columnName.get(i).toString()) + ",";
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return output;
+	}
+
+	public String exportAllData(String column, String table, String[] condition) {
+		String output = "";
+		ArrayList<String> columnName = new ArrayList<String>();
+		ArrayList<String> columnData = new ArrayList<String>();
+		try {
+			boolean validateStatus = validation(table, column, condition);
+			if (validateStatus == false) {
+				return null;
+			}
+			DatabaseMetaData metaData = conn.getMetaData();
+			ResultSet metaDataRs;
+			if (column.equals("*")) {
+				metaDataRs = metaData.getColumns(null, null, table, null);
+			} else {
+				metaDataRs = metaData.getColumns(null, null, table, column);
+			}
+
+			while (metaDataRs.next()) {
+				columnName.add(metaDataRs.getString("COLUMN_NAME"));
+			}
+			for (int i = 0; i < columnName.size(); i++) {
+				if (i == columnName.size()-1) {
+					output += columnName.get(i).toString().toUpperCase() + "\n";
+				} else {
+					output += columnName.get(i).toString().toUpperCase() + ",";
+				}
+			}
+			String selectDataSQL = "SELECT " + column + " FROM " + table + " WHERE ";
+			for (int i = 0; i < condition.length; i++) {
+				if (i == 0) {
+					selectDataSQL += condition[i];
+				} else {
+					selectDataSQL += " AND " + condition[i];
+				}
+			}
+			PreparedStatement selectDataPstmt = conn.prepareStatement(selectDataSQL);
+			ResultSet selectDataRs = selectDataPstmt.executeQuery();
+			while (selectDataRs.next()) {
+				for (int i = 0; i < columnName.size(); i++) {
+					if (i == columnName.size()-1) {
+						output += selectDataRs.getObject(columnName.get(i).toString()) + "\n";
+					} else {
+						output += selectDataRs.getObject(columnName.get(i).toString()) + ",";
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return output;
+	}
+	
+	public String getIPforHostZoom(String hostname) {
+		String ipOfHost = "";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement("select distinct hostip from visualalgo where hostname = ?");
+			pstmt.setString(1, hostname);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				ipOfHost = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return ipOfHost;
 	}
 	
 	private boolean validation(String table, String column) {

@@ -7,12 +7,12 @@
   <context-param>
     <description>MySQL User</description>
     <param-name>mysqlUser</param-name>
-    <param-value>root</param-value>
+    <param-value>fypuser</param-value>
   </context-param>
   <context-param>
     <description>MySQL Password</description>
     <param-name>mysqlPassword</param-name>
-    <param-value>toor</param-value>
+    <param-value>fypuser</param-value>
   </context-param>
   <context-param>
     <description>JDBC URL</description>

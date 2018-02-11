@@ -41,7 +41,7 @@ function populateMainDiv(hostname, map, hostpos) {
 			});
 			
 			if (idname.localeCompare("") != 0) {
-				var htmlStr = '<a href="host-zoom.jsp?hostname=' + hostnameArray[i] + '&time=' + timeNow + '" target="_blank" data-toggle="tooltip" data-html="true" data-placement="' + ttposition + '" title="" data-original-title="<h5>Host Name / Host ID / IP address</h5><hr><p>IP address: 10.0.1.1</p><p>Host name: Corporate-Web-Server</p><p>Host Owner: Ben</p><p>Location: Level 2-1</p>"><svg width="20" height="20"><polygon points="' + correctCoords + '" style="fill-opacity:0;stroke:black;stroke-width:1;fill-rule:nonzero;" /></svg></a></div>';
+				var htmlStr = '<a href="host-zoom.jsp?hostname=' + hostnameArray[i] + '&time=' + timeNow + '" target="_blank"><svg width="20" height="20"><polygon points="' + correctCoords + '" style="fill-opacity:0;stroke:black;stroke-width:1;fill-rule:nonzero;" /></svg></a></div>';
 				mainDiv.innerHTML += '<div id="' + idname + '">' + htmlStr;
 				
 				//Styling code

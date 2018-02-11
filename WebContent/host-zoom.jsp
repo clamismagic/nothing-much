@@ -1,3 +1,5 @@
+<%@page import="model.QueryDataManager"%>
+<%@page import="javax.management.Query"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*" %>
@@ -56,6 +58,8 @@
 		}
 		String hostname = request.getParameter("hostname");
 		String time = request.getParameter("time");
+		QueryDataManager queryData = new QueryDataManager(request);
+		String hostip = queryData.getIPforHostZoom(hostname);
 					%>
 <body onload="init('<%=extHosts %>', '<%=trafficFlow %>', '<%=hostname %>');">
     <jsp:include page="header.html"></jsp:include>
@@ -71,9 +75,8 @@
                             <h4>
                                 Host Details
                             </h4>
-
-                            <p>IP address:</p>
-                            <p>MAC address:</p>
+							<p>Host Name: <%=hostname %></p>
+                            <p>IP address: <%=hostip %></p>
 
                         </div>
                         <ul id="id-list"></ul>
